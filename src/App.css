@@ -18,9 +18,26 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+.landingbtn {
+    margin-top: 20px;
+    color: white;
+    font-family: 'Raleway';
+    font-size: 30px;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 5%;
+    background-color: transparent; 
 }
+
+.landingbtn:hover {
+background-color: white; 
+transition: background-color .3s linear;
+color: black;
+cursor: pointer;
+transform:scale(1.2);
+}
+
 
 @keyframes App-logo-spin {
   from {
