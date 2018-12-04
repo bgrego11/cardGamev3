@@ -18,6 +18,7 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
+
   login() {
     this.auth0.authorize();
   }

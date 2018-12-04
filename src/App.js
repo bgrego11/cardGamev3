@@ -20,20 +20,11 @@ class App extends Component {
 
     return (
       <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
-            </Navbar.Brand>
-            <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, 'home')}
-            >
-              Home
-            </Button>
-            {
+
+          {
               !isAuthenticated() && (
+                <div className="hero">
+                <h1>Cards Against Humaity</h1>
                   <Button
                     id="qsLoginBtn"
                     bsStyle="primary"
@@ -42,10 +33,24 @@ class App extends Component {
                   >
                     Log In
                   </Button>
+                  </div>
+                  
                 )
             }
             {
               isAuthenticated() && (
+                <Navbar fluid>
+                <Navbar.Header>
+                  <Navbar.Brand>
+                    <a href="/">Cards Against Humanity</a>
+                  </Navbar.Brand>
+                  <Button
+                    bsStyle="primary"
+                    className="btn-margin"
+                    onClick={this.goTo.bind(this, 'home')}
+                  >
+                    Home
+                  </Button>
                   <Button
                     id="qsLogoutBtn"
                     bsStyle="primary"
@@ -54,11 +59,11 @@ class App extends Component {
                   >
                     Log Out
                   </Button>
+                </Navbar.Header>
+              </Navbar>
                 )
             }
-          </Navbar.Header>
-        </Navbar>
-      </div>
+        </div>
     );
   }
 }
