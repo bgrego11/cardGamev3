@@ -1,34 +1,14 @@
-const server = require('http').createServer()
-const io = require('socket.io')(server)
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-io.on('connection', function (client) {
-  client.on('register', handleRegister)
+app.get('/', function(req, res){
+});
 
-  client.on('join', handleJoin)
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
 
-  client.on('leave', handleLeave)
-
-  client.on('message', handleMessage)
-
-  client.on('chatrooms', handleGetChatrooms)
-
-  client.on('availableUsers', handleGetAvailableUsers)
-
-  client.on('disconnect', function () {
-    console.log('client disconnect...', client.id)
-    handleDisconnect()
-  })
-
-  client.on('error', function (err) {
-    console.log('received error from client:', client.id)
-    console.log(err)
-  })
-})
-
-server.listen(3000, function (err) {
-  if (err) throw err
-  console.log('listening on port 3000')
-})
-  
-  
-  
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
