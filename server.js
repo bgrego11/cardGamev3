@@ -18,13 +18,29 @@
 
 const io = require('socket.io')();
 
+
+let usersNum = 0;
+
 io.on('connection', (client) => {
+
+  usersNum++
+
   client.on('subscribeToTimer', (interval) => {
     console.log('client is subscribing to timer with interval ', interval);
     setInterval(() => {
-      client.emit('timer', new Date());
+      client.emit('timer', usersNum);
     }, interval);
   });
+
+  client.on('disconnect', () => {
+    usersNum--
+    console.log('client is disconnected');
+    setInterval(() => {
+      client.emit('timer', usersNum);
+    }, interval);
+  });
+
+
 });
 
 const port = 8000;

@@ -32,11 +32,11 @@ toggleNav = () => {
     return (
       <div className="sideBar">
      <div className={this.state.nav}>
-     <div href="javascript:void(0)" className={this.state.button} onClick={this.toggleNav}>&times;</div>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
+     <div className={this.state.button} onClick={this.toggleNav}>&times;</div>
+  <a href="/home">About</a>
+  <a href="/home">Services</a>
+  <a href="/home">Clients</a>
+  <a href="/home">Contact</a>
      
      </div>
       </div>
