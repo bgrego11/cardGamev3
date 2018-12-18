@@ -7,9 +7,10 @@ function subscribeToTimer(cb) {
   socket.emit('subscribeToTimer', 1000);
 }
 
-function gotthesocket(){
-socket.on('message', tha => (null, tha));
-socket.emit('gotthesocket')
+function gotthesocket(txt){
+socket.on('message', txt => (null, txt));
+console.log(txt)
+socket.emit('gotthesocket', txt)
 }
 
 function clientelle() {

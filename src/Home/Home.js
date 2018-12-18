@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 // import Sidebar from './Sidebar'
 import './Home.css';
-import { subscribeToTimer, gotthesocket, clientelle } from './api';
+import openSocket from 'socket.io-client';
+const  socket = openSocket('http://localhost:8000');
 
 class Home extends Component {
   constructor(props) {
@@ -13,18 +14,18 @@ class Home extends Component {
       tha: 'nothing yet'
       
     }
-    subscribeToTimer((err, timestamp) => this.setState({ 
-      timestamp 
-    }));
+    
 
-    gotthesocket((err, tha) => this.setState({
-      tha
-    }))
-
+    
+    
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  
+  componentDidMount() {
+    socket.on("message", data => this.setState({ value: data }));
+  }  
 
   handleChange(event) {
     this.setState({value: event.target.value});
@@ -32,11 +33,13 @@ class Home extends Component {
 
   handleSubmit(event) {
     alert('A name was submitted: ' + this.state.value);
-    this.setState({data: this.state.value})
-    clientelle();
-    gotthesocket();
+    
+   
+    
+    console.log(this.state.value)
+    socket.emit('gotthesocket', this.state.value)
     event.preventDefault();
-
+  
   }
 
   render() {
@@ -45,7 +48,7 @@ class Home extends Component {
      <div className="chatHome">This is the chat box</div>
      
      <p>Number of current users: {this.state.timestamp}</p>
-     <p>Users Id's: {this.state.data}</p>
+     <p>Users Id's: {this.state.value}</p>
      <form onSubmit={this.handleSubmit}>
         <label>
           Name:
