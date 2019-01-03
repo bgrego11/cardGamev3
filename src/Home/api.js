@@ -8,8 +8,7 @@ function subscribeToTimer(cb) {
 }
 
 function gotthesocket(txt){
-socket.on('message', txt => (null, txt));
-console.log(txt)
+socket.on('message', txt => (txt));
 socket.emit('gotthesocket', txt)
 }
 

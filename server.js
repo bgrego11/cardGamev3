@@ -1,18 +1,14 @@
 const io = require('socket.io')();
 
-
 let usersNum = 0;
 
-
 io.on('connection', (client) => {
-
 let addedUser = false;
 
-
-
 client.on('gotthesocket', (a) => {
-  console.log(a);
-  client.emit('message', a);
+  console.log(a)
+  setInterval(() =>
+  client.emit('message', a))
 })
 
 client.on('clientEvent', function(data) {

@@ -44,28 +44,6 @@ class App extends Component {
             }
             {
               isAuthenticated() && (
-              //   <Navbar fluid>
-              //   <Navbar.Header>
-              //     <Navbar.Brand>
-              //       <a href="/">Cards Against Humanity</a>
-              //     </Navbar.Brand>
-              //     </Navbar.Header>
-              //     <Button
-              //       bsStyle="primary"
-              //       className="btn-margin"
-              //       onClick={this.goTo.bind(this, 'home')}
-              //     >
-              //       Home
-              //     </Button>
-              //     <Button
-              //       id="qsLogoutBtn"
-              //       bsStyle="primary"
-              //       className="btn-margin"
-              //       onClick={this.logout.bind(this)}
-              //     >
-              //       Log Out
-              //     </Button>
-              // </Navbar>
               <div>
               <div className="navbar" id="homeid">
               <div className="linkBox">
