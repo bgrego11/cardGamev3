@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 // import Sidebar from './Sidebar'
 import './Home.css';
-import { subscribeToTimer, gotthesocket, clientelle } from './api';
+import { subscribeToTimer, gotthesocket } from './api';
+import Game from '../Game/Game';
 
 class Home extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class Home extends Component {
         </label>
         <input type="submit" value="Submit" />
       </form>
+      <Game />
       </div>
     );
   }
