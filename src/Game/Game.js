@@ -13,10 +13,11 @@ export default class Game extends Component {
       blackDiscard: [],
       whiteDiscard: [],
       cards: [],
-      players: 3,
+      players: [],
       names:["zeus","steve","rebecca"],
       pCards: [],
-      dealer: "" 
+      dealer: "",
+      count: 0 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -49,19 +50,27 @@ handleChange(e) {
   e.preventDefault()
 }
 
+
+
 dealCards = () => {
-  let count = 7;
-  const max = this.state.whiteCards.length-1;
-  const numSelect = Math.floor(Math.random() * max);
-  const currentPlayers = this.state.names;
-
+  let newcount = this.state.count+1
   let cardArray = this.state.whiteCards;
-
-  // if (count > 0) {
-    
-  // }
-  console.log(this.state.whiteCards[max])
-  console.log(cardArray)
+  let nameArray = this.state.players
+console.log(this.state.players)
+    if (this.state.count < 7) {
+    const max = this.state.whiteCards.length-1;
+    let numSelect = Math.floor(Math.random() * max);
+      nameArray.push(this.state.whiteCards[numSelect])
+      let newWhite = cardArray.filter((hero) => 
+        hero !== this.state.whiteCards[numSelect])
+      this.setState({
+        count: newcount,
+        whiteCards: newWhite,
+        players: nameArray
+      })
+    }
+  
+  
 
   
   // this.setState({
@@ -71,7 +80,6 @@ dealCards = () => {
 }
 
   render() {
-
     return (
       <div className="container">
   <h1>Number of players</h1>
