@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import decks from '../data/decks'
+import decks from '../data/decks';
 
 export default class Game extends Component {
   constructor(props) {
@@ -53,11 +53,13 @@ handleChange(e) {
 
 
 dealCards = () => {
-  let newcount = this.state.count+1
-  let cardArray = this.state.whiteCards;
-  let nameArray = this.state.players
+  console.log(this.state.whiteCards.length)
 console.log(this.state.players)
     if (this.state.count < 7) {
+      for(let i=0; i<7; i++){
+        let cardArray = this.state.whiteCards;
+        let nameArray = this.state.players
+        let newcount = this.state.count+1
     const max = this.state.whiteCards.length-1;
     let numSelect = Math.floor(Math.random() * max);
       nameArray.push(this.state.whiteCards[numSelect])
@@ -68,6 +70,8 @@ console.log(this.state.players)
         whiteCards: newWhite,
         players: nameArray
       })
+      console.log(this.state.whiteCards.length)
+    }
     }
   
   
@@ -84,13 +88,7 @@ console.log(this.state.players)
       <div className="container">
   <h1>Number of players</h1>
   <h2>{this.state.players}</h2>
-  {/* <form onSubmit={this.handleSubmit}>
-        <label>
-          How Many Players?
-          <input type="text" value={this.state.value} onChange={this.handleChange} required placeholder=" "  />
-        </label>
-        <input type="submit" value="Submit" />
-      </form> */}
+
       <button onClick={this.dealCards}>shuffle</button>
       <div></div>
       </div>
