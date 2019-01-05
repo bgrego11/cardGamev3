@@ -13,7 +13,7 @@ export default class Game extends Component {
       blackDiscard: [],
       whiteDiscard: [],
       cards: [],
-      players: [],
+      players: [{name: "stevio", cardsInHand: []}],
       names:["zeus","steve","rebecca"],
       pCards: [],
       dealer: "",
@@ -24,9 +24,11 @@ export default class Game extends Component {
   }
 
   componentWillMount() {
+    if (this.state.cards.length === 0){
     this.setState({
       cards: decks
     })
+  }
   }
 
   componentDidMount() {
@@ -37,12 +39,10 @@ export default class Game extends Component {
   }
 
   handleSubmit(event) {
-    const numofPlayers = this.state.userInput
-  this.setState({     
-    players: numofPlayers
-  });
+
   event.preventDefault()
 }
+
 handleChange(e) {
   this.setState({
     userInput: e.target.value
@@ -53,44 +53,53 @@ handleChange(e) {
 
 
 dealCards = () => {
-  console.log(this.state.whiteCards.length)
-console.log(this.state.players)
-    if (this.state.count < 7) {
-      for(let i=0; i<7; i++){
+  
+console.log(this.state.whiteCards.length)
+  
+  
         let cardArray = this.state.whiteCards;
-        let nameArray = this.state.players
+        let nameArray = this.state.players[0].cardsInHand
         let newcount = this.state.count+1
-    const max = this.state.whiteCards.length-1;
-    let numSelect = Math.floor(Math.random() * max);
+  
+        const max = this.state.whiteCards.length-1;
+  
+        let numSelect = Math.floor(Math.random() * max);
       nameArray.push(this.state.whiteCards[numSelect])
+  
       let newWhite = cardArray.filter((hero) => 
-        hero !== this.state.whiteCards[numSelect])
-      this.setState({
+        hero !== this.state.whiteCards[numSelect]);
+
+        this.setState({
         count: newcount,
         whiteCards: newWhite,
-        players: nameArray
+        players: [{
+          name: "stevio",
+          cardsInHand: nameArray}]
       })
-      console.log(this.state.whiteCards.length)
+      console.log(this.state.whiteCards[0])
     }
-    }
-  
-  
 
-  
-  // this.setState({
-  //     selection: this.state.names[numSelect].name
-  // })
-  // console.log(this.state.blackCards)
+showWhite = () => {
+  if (this.state.players[0].cardsInHand.length < 7) {
+    this.dealCards()
+  }
+  console.log(this.state.whiteCards.length)
 }
-
   render() {
+    const currentPlayers = this.state.players.map((i, index) => <ul key={index}>{i.name}</ul>)
+    const currentCards = 
+    this.state.players.map((i, index) => <ul key={index}>{i.cardsInHand}</ul>)
+    
     return (
       <div className="container">
   <h1>Number of players</h1>
-  <h2>{this.state.players}</h2>
+  <h2>{this.state.players[0].cardsInHand}</h2>
 
       <button onClick={this.dealCards}>shuffle</button>
-      <div></div>
+      <div>current players</div>
+      <div>{currentPlayers}</div>
+      <div>{currentCards}</div>
+      <button onClick={this.showWhite}>shuffle</button>
       </div>
     );
   }
