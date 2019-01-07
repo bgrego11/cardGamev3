@@ -7,17 +7,13 @@ export default class Game extends Component {
     this.state ={
       userInput: '',
       blackCards: "",
-      blackCardCount: 89,
       whiteCards: "",
-      whiteCardCount: 459,
       blackDiscard: [],
       whiteDiscard: [],
       cards: [],
       players: [{name: "stevio", cardsInHand: []}],
       names:["zeus","steve","rebecca"],
-      pCards: [],
       dealer: "",
-      count: 0 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -53,14 +49,8 @@ handleChange(e) {
 
 
 dealCards = () => {
-  
-console.log(this.state.whiteCards.length)
-  
-  
         let cardArray = this.state.whiteCards;
         let nameArray = this.state.players[0].cardsInHand
-        let newcount = this.state.count+1
-  
         const max = this.state.whiteCards.length-1;
   
         let numSelect = Math.floor(Math.random() * max);
@@ -69,24 +59,37 @@ console.log(this.state.whiteCards.length)
       let newWhite = cardArray.filter((hero) => 
         hero !== this.state.whiteCards[numSelect]);
 
+        
         this.setState({
-        count: newcount,
         whiteCards: newWhite,
         players: [{
           name: "stevio",
-          cardsInHand: nameArray}]
+          cardsInHand: nameArray,
+          points: 0},
+          {
+            name: "cheerio",
+            cardsInHand: nameArray,
+            points: 0},
+            {
+              name: "dope",
+              cardsInHand: nameArray,
+              points: 0}]
       })
-      console.log(this.state.whiteCards[0])
     }
 
 showWhite = () => {
   if (this.state.players[0].cardsInHand.length < 7) {
-    this.dealCards()
+   this.dealCards()
+
+    if(this.state.players[0].cardsInHand.length < 7) {
+      this.showWhite() }
   }
-  console.log(this.state.whiteCards.length)
 }
   render() {
-    const currentPlayers = this.state.players.map((i, index) => <ul key={index}>{i.name}</ul>)
+    const currentPlayers = this.state.players.map((i, index) => <div key={index}>
+                                                                        <div>{i.name}</div>
+                                                                        <div>{i.cards}</div>
+                                                                        </div>)
     const currentCards = 
     this.state.players.map((i, index) => <ul key={index}>{i.cardsInHand}</ul>)
     
