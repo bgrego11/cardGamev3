@@ -9,10 +9,12 @@ class Home extends Component {
     super(props);
     this.state = {
       timestamp: 'no timesamp yet',
-      value: "there are no names yet",
+      value: "",
       userName: "buddy",
-      tha: 'nothing yet'
-      
+      currentPlayers: [{name: "No Current Players",
+        id:0 
+       }],
+      count: 0
     }
 
 
@@ -22,39 +24,45 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    subscribeToTimer((err, timestamp) => this.setState({ 
-      timestamp 
-    }));
 
 
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({
+      value: event.target.value
+    });
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    this.setState({userName: this.state.value})
+    let newNames = this.state.currentPlayers.slice()
+    newNames.push({name: this.state.value,
+                   id: this.state.count+1 
+                  })
+    
+
+    this.setState({
+      currentPlayers: newNames
+    })
+    
     event.preventDefault()
-    gotthesocket(this.state.userName)
   }
 
   render() {
+    const users = this.state.currentPlayers.map(i => i.name + ", ")
+
     return (
       <div className="homeCont">
-     <div className="chatHome">This is the chat box</div>
      
-     <p>Number of current users: {this.state.timestamp}</p>
-     <p>Users Id's: {this.state.userName}</p>
+     <p>Users Id's: {users}</p>
      <form onSubmit={this.handleSubmit}>
         <label>
-          Name:
+          Add a player:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
-      <Game />
+      <Game firstPlayers={this.state.currentPlayers} />
       </div>
     );
   }

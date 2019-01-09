@@ -1,6 +1,12 @@
+.container {
+    height: 100%;
+    width: 100%;
+
+}
+
 .heroGame {
 text-align: center;
-height: 20vh;
+height: 300px;
 width: 100%;
 }
 
@@ -12,4 +18,10 @@ width: 100%;
     width: 25%;
     height: 250px;
     font-size: 30px;
+}
+
+.currentCards {
+    width: 25%;
+
+
 }
