@@ -1,0 +1,15 @@
+.heroGame {
+text-align: center;
+height: 20vh;
+width: 100%;
+}
+
+.playerName {
+    font-size: 30px;
+}
+
+.cardOuter {
+    width: 25%;
+    height: 250px;
+    font-size: 30px;
+}
