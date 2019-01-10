@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import Sidebar from './Sidebar'
 import './Home.css';
-import { subscribeToTimer, gotthesocket } from './api';
 import Game from '../Game/Game';
 
 class Home extends Component {
@@ -18,15 +17,10 @@ class Home extends Component {
     }
 
 
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-
-
-  }
 
   handleChange(event) {
     this.setState({
@@ -35,21 +29,26 @@ class Home extends Component {
   }
 
   handleSubmit(event) {
-    let newNames = this.state.currentPlayers.slice()
-    newNames.push({name: this.state.value,
+
+    if (this.state.currentPlayers[0].name === "No Current Players") {
+      var newNames = []
+    } else {
+    var newerNames = this.state.currentPlayers.slice()
+    }
+    newerNames.push({name: this.state.value,
                    id: this.state.count+1 
                   })
     
-
     this.setState({
-      currentPlayers: newNames
+      currentPlayers: newNames,
+      value: ""
     })
     
     event.preventDefault()
   }
 
   render() {
-    const users = this.state.currentPlayers.map(i => i.name + ", ")
+    const users = this.state.currentPlayers.map((i, index) => <li key={index}>{i.name}</li> )
 
     return (
       <div className="homeCont">
@@ -62,7 +61,7 @@ class Home extends Component {
         </label>
         <input type="submit" value="Submit" />
       </form>
-      <Game firstPlayers={this.state.currentPlayers} />
+      <Game initPlayers={this.state.currentPlayers.map(i=>i.name)} />
       </div>
     );
   }
