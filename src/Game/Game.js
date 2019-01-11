@@ -9,11 +9,9 @@ export default class Game extends Component {
     this.state ={
       blackCards: "",
       whiteCards: "",
-      blackDiscard: [],
-      whiteDiscard: [],
       cards: [],
       players: [{name: "No Current Players", cardsInHand: []}],
-      names:["john", "dave"],
+      names:["john", "dave", "sven"],
       dealer: "",
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -92,7 +90,6 @@ deal = () => {
    players: playersObj
  })
 
-
 }
 
 
@@ -113,18 +110,32 @@ setTimeout(() => {
 }, 200);
     }
 }
-  render() {
-    // const currentPlayers = this.state.players.map((i, index) => <div key={index}>
-    //                                                               <div className="playerName">{i.name}</div>
-    //                                                             </div>)
 
+showDeal= () => {
+  console.log(this.state.players)
+}
+
+playcard = () => {
+
+}
+
+  render() {
     const currentCards = 
     this.state.players.map((i, index) => <div key={index}>
-                                            <li>{i.cardsInHand}</li>
+                                            <div className="cardFrame">
+                                            <h1>{i.name}</h1>
+                                            { i.cardsInHand.map(card =>
+                                              <div className="cardOutline">
+                                              <div onClick={this.playcard} className="cardActual">
+                                                { card }
+                                              </div>
+                                              <button>Play Card</button>
+                                              </div>
+                                            )}
+                                            </div>
                                           </div>)
+
     
-
-
     return (
       <div className="container">
 
@@ -133,13 +144,14 @@ setTimeout(() => {
   <div>{this.state.players[0].name === "No Current Players" ? 0 : this.state.names.length }</div>
   <div>current players</div>
   <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div>
-  <button onClick={this.showWhite}>Start Game</button>
   </div>
-  <button onClick={this.deal}>deal</button>
+  <button onClick={this.deal}>deal cards</button>
 
   <div className="currentCards">
-    {currentCards}
+  <button onClick={this.showDeal}>showplayers</button>
   </div>
+
+  <div>{currentCards}</div>
 
 
 
