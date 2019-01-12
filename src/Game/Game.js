@@ -59,12 +59,19 @@ deal = () => {
 
  let playersObj = []
 
+ const blackMax = this.state.blackCards.length-1;
+let blackSelect = Math.floor(Math.random() * blackMax);
+let currentText = this.state.blackCards[blackSelect].text;
+let currentPick = this.state.blackCards[blackSelect].pick;
+
  for (let i = 0; i<numOfPlayers; i++) {
   let playerCardsArray = []
+  
   for (let b = 0; b< 7; b++) {
     setTimeout(() => {
     const max = this.state.whiteCards.length-1;
   let numSelect = Math.floor(Math.random() * max);
+
   playerCardsArray.push(this.state.whiteCards[numSelect])
 
   let cardArray = this.state.whiteCards;
@@ -82,6 +89,8 @@ deal = () => {
     name: this.state.names[i],
     cardsInHand: playerCardsArray,
     score: 0,
+    bcardPick: currentPick,
+    bCard: currentText,
     dealer: false
   })
  }
@@ -126,6 +135,9 @@ playcard = () => {
     this.state.players.map((i, index) => <div key={index}>
                                             <div className="cardFrame">
                                             <h1>{i.name}</h1>
+                                            <h2>Black Card</h2>
+                                            <h2>{i.bCard}</h2>
+                                            <h2>Pick: {i.bcardPick}</h2>
                                             { i.cardsInHand.map(card =>
                                               <div className="cardOutline">
                                               <div className="cardActual">
@@ -152,6 +164,7 @@ playcard = () => {
   <div className="currentCards">
   <button onClick={this.showDeal}>showplayers</button>
   </div>
+
 
   <div>{currentCards}</div>
 
