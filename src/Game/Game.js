@@ -143,7 +143,7 @@ playcard = () => {
                                               <div className="cardActual">
                                                 { card }
                                               </div>
-                                              <button onClick={this.playcard}>Play Card</button>
+                                              <button className="pickButton" onClick={this.playcard}>Play Card</button>
                                               </div>
                                             )}
                                             </div>
@@ -159,10 +159,10 @@ playcard = () => {
   <div>current players</div>
   <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div>
   </div>
-  <button onClick={this.deal}>deal cards</button>
+  <button onClick={this.deal} className="pickButton">deal cards</button>
 
-  <div className="currentCards">
-  <button onClick={this.showDeal}>showplayers</button>
+  <div className="currentCards" >
+  <button onClick={this.showDeal} className="pickButton">showplayers</button>
   </div>
 
 

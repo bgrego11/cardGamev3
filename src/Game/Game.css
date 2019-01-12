@@ -22,6 +22,7 @@ width: 100%;
 
 .currentCards {
     width: 100%;
+    text-align: center;
 
 }
 
@@ -51,4 +52,48 @@ width: 100%;
     text-align: center;
     width: 90%;
     height: 100px;
+}
+
+.pickButton {
+    margin-top: 10px;
+    color: black;
+    font-family: 'Raleway';
+    font-size: 20px;
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 5%;
+    background-color: transparent; 
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+        
+}
+
+.pickButton:hover {
+    cursor: pointer;
+    animation-name: bounce;
+    -moz-animation-name: bounce;
+  }
+
+@keyframes bounce {
+	0%, 100%, 20%, 50%, 80% {
+		-webkit-transform: translateY(0);
+		-ms-transform:     translateY(0);
+		transform:         translateY(0)
+	}
+	40% {
+		-webkit-transform: translateY(-10px);
+		-ms-transform:     translateY(-10px);
+		transform:         translateY(-10px)
+	}
+	60% {
+		-webkit-transform: translateY(-5px);
+		-ms-transform:     translateY(-5px);
+		transform:         translateY(-5px)
+	}
 }
