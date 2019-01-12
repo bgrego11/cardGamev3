@@ -53,6 +53,14 @@ handleChange(e) {
   e.preventDefault()
 }
 
+shuffle = (a) => {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 
 deal = () => {
  var numOfPlayers = this.state.names.length
@@ -63,70 +71,67 @@ deal = () => {
 let blackSelect = Math.floor(Math.random() * blackMax);
 let currentText = this.state.blackCards[blackSelect].text;
 let currentPick = this.state.blackCards[blackSelect].pick;
+let a = this.state.whiteCards 
+for (let i = a.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [a[i], a[j]] = [a[j], a[i]];
+}
+
 
  for (let i = 0; i<numOfPlayers; i++) {
-  let playerCardsArray = []
-  
-  for (let b = 0; b< 7; b++) {
-    setTimeout(() => {
-    const max = this.state.whiteCards.length-1;
-  let numSelect = Math.floor(Math.random() * max);
+   
+    
 
-  playerCardsArray.push(this.state.whiteCards[numSelect])
 
-  let cardArray = this.state.whiteCards;
+    let playerCardsArray = a.slice(0,7)
+    a.splice(0,7)
+   console.log(playerCardsArray)
 
-  let newWhite = 
-  cardArray.filter((hero) => 
-  hero !== this.state.whiteCards[numSelect])
+
+
+    
+
+    this.setState({
+      whiteCards: a
+    })
+      
+    playersObj.push({
+      name: this.state.names[i],
+      cardsInHand: playerCardsArray,
+      score: 0,
+      bcardPick: currentPick,
+      bCard: currentText,
+      dealer: false
+    })
+  }
+
 
   this.setState({
-    whiteCards: newWhite
+    players: playersObj
   })
-    }, 1000)
-  }
-  playersObj.push({
-    name: this.state.names[i],
-    cardsInHand: playerCardsArray,
-    score: 0,
-    bcardPick: currentPick,
-    bCard: currentText,
-    dealer: false
-  })
- }
 
-
- this.setState({
-   players: playersObj
- })
-
+  console.log(this.state)
 }
 
 
    
 
-showWhite = () => {
-
-  if (this.state.players[0].cardsInHand.length < 7) {
-   this.dealCards()
-   console.log(this.state.names)
-
-
-setTimeout(() => {
-
-   if (this.state.players[0].cardsInHand.length < 7) {
-      this.showWhite()                                    
-  }
-}, 200);
-    }
-}
 
 showDeal= () => {
-  console.log(this.state.players[0].cardsInHand)
+  console.log(this.state)
 }
 
-playcard = () => {
-  console.log(this.state.players)
+playcard = (i, index) => {
+    console.log(i)
+    this.state.cardsinplay.push([this.state.players[index].cardsInHand[i], index])
+    console.log(this.state.cardsinplay)
+    this.state.players[index].cardsInHand.splice(i,1)
+    let state = this.state
+    this.setState(state)
+
+    console.log(this.state.players[index].cardsInHand)
+
+    console.log(index)
 
 }
 
@@ -138,12 +143,12 @@ playcard = () => {
                                             <h2>Black Card</h2>
                                             <h2>{i.bCard}</h2>
                                             <h2>Pick: {i.bcardPick}</h2>
-                                            { i.cardsInHand.map(card =>
+                                            { i.cardsInHand.map((card, i) =>
                                               <div className="cardOutline">
                                               <div className="cardActual">
                                                 { card }
                                               </div>
-                                              <button className="pickButton" onClick={this.playcard}>Play Card</button>
+                                              <button id= { i + ": " + index } className="pickButton"  onClick={() => this.playcard(i, index)}>Play Card</button>
                                               </div>
                                             )}
                                             </div>
