@@ -13,6 +13,7 @@ export default class Game extends Component {
       players: [{name: "No Current Players", cardsInHand: []}],
       names:["john", "dave", "sven"],
       dealer: "",
+      cardsinplay: []
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -112,10 +113,11 @@ setTimeout(() => {
 }
 
 showDeal= () => {
-  console.log(this.state.players)
+  console.log(this.state.players[0].cardsInHand)
 }
 
 playcard = () => {
+  console.log(this.state.players)
 
 }
 
@@ -126,10 +128,10 @@ playcard = () => {
                                             <h1>{i.name}</h1>
                                             { i.cardsInHand.map(card =>
                                               <div className="cardOutline">
-                                              <div onClick={this.playcard} className="cardActual">
+                                              <div className="cardActual">
                                                 { card }
                                               </div>
-                                              <button>Play Card</button>
+                                              <button onClick={this.playcard}>Play Card</button>
                                               </div>
                                             )}
                                             </div>
@@ -153,7 +155,11 @@ playcard = () => {
 
   <div>{currentCards}</div>
 
-
+      <div>
+    <h1>Cards in play</h1>
+    <div>{this.state.cardsinplay}</div>
+<div>Winner</div>
+</div>
 
       </div>
     );

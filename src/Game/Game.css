@@ -26,19 +26,24 @@ width: 100%;
 }
 
 .cardFrame {
+    padding: 20px;
     text-align: center;
     width:100%;
-    height: 300px;
-    background: black;
-    color: green;
+    height: 600px;
+    background: rgb(192, 191, 191);
+    color: black;
 }
 
 .cardOutline {
+    position: relative;
     float: left;
-    text-align: center;
-    width: 25%;
-    height: 100px;
-    border: 1px solid blue;
+    margin: 10px;
+    width: 150px;
+    height: 220px;
+    border-radius: 10px;
+    background: #fff;
+    -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
 }
 
 .cardActual {
