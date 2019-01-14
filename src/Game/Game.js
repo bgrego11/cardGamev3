@@ -39,6 +39,7 @@ export default class Game extends Component {
       blackCards: this.state.cards[0].blackCards,
       whiteCards: this.state.cards[0].whiteCards,
     })
+
   }
 
   handleSubmit(event) {
@@ -72,6 +73,7 @@ let blackSelect = Math.floor(Math.random() * blackMax);
 let currentText = this.state.blackCards[blackSelect].text;
 let currentPick = this.state.blackCards[blackSelect].pick;
 let a = this.state.whiteCards 
+// shuffle function for stack fo cards 
 for (let i = a.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [a[i], a[j]] = [a[j], a[i]];
@@ -80,16 +82,9 @@ for (let i = a.length - 1; i > 0; i--) {
 
  for (let i = 0; i<numOfPlayers; i++) {
    
-    
-
-
+  
     let playerCardsArray = a.slice(0,7)
     a.splice(0,7)
-   console.log(playerCardsArray)
-
-
-
-    
 
     this.setState({
       whiteCards: a
@@ -110,7 +105,6 @@ for (let i = a.length - 1; i > 0; i--) {
     players: playersObj
   })
 
-  console.log(this.state)
 }
 
 
@@ -118,22 +112,23 @@ for (let i = a.length - 1; i > 0; i--) {
 
 
 showDeal= () => {
-  console.log(this.state)
+  console.log(this.state.players)
+  console.log(this.state.whiteCards)
 }
 
-playcard = (i, index) => {
-    console.log(i)
-    this.state.cardsinplay.push([this.state.players[index].cardsInHand[i], index])
-    console.log(this.state.cardsinplay)
+playcard = (i, index, winner) => {
+    this.state.cardsinplay.push({ name: this.state.players[index].cardsInHand[i], 
+                                  cardIndex: index,
+                                  cardOwner: winner})
+
     this.state.players[index].cardsInHand.splice(i,1)
     let state = this.state
     this.setState(state)
-
-    console.log(this.state.players[index].cardsInHand)
-
-    console.log(index)
+    console.log(this.state.cardsinplay)
 
 }
+
+showOwner = () => {}
 
   render() {
     const currentCards = 
@@ -143,16 +138,26 @@ playcard = (i, index) => {
                                             <h2>Black Card</h2>
                                             <h2>{i.bCard}</h2>
                                             <h2>Pick: {i.bcardPick}</h2>
-                                            { i.cardsInHand.map((card, i) =>
-                                              <div className="cardOutline">
+                                            { i.cardsInHand.map((card, white) =>
+                                              <div key={white + 1} className="cardOutline">
                                               <div className="cardActual">
                                                 { card }
                                               </div>
-                                              <button id= { i + ": " + index } className="pickButton"  onClick={() => this.playcard(i, index)}>Play Card</button>
+                                              <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name)}>Play Card</button>
                                               </div>
                                             )}
                                             </div>
-                                          </div>)
+                                          </div>);
+
+    let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
+      <div>
+      <div className="cardOutline" key={index}>
+      <div className="cardActual">{pickedCard.name}</div>
+      <button className="pickButton">Pick a Winner </button>
+      
+      </div>
+      </div>
+    )
 
     
     return (
@@ -175,8 +180,8 @@ playcard = (i, index) => {
 
       <div>
     <h1>Cards in play</h1>
-    <div>{this.state.cardsinplay}</div>
-<div>Winner</div>
+    <h1>Pick a Winner!</h1>
+    <div>{pickACard}</div>
 </div>
 
       </div>
