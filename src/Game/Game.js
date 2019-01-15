@@ -13,7 +13,8 @@ export default class Game extends Component {
       players: [{name: "No Current Players", cardsInHand: []}],
       names:["john", "dave", "sven"],
       dealer: "",
-      cardsinplay: []
+      cardsinplay: [],
+      score: []
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -79,10 +80,8 @@ for (let i = a.length - 1; i > 0; i--) {
   [a[i], a[j]] = [a[j], a[i]];
 }
 
-
  for (let i = 0; i<numOfPlayers; i++) {
-   
-  
+
     let playerCardsArray = a.slice(0,7)
     a.splice(0,7)
 
@@ -100,16 +99,11 @@ for (let i = a.length - 1; i > 0; i--) {
     })
   }
 
-
   this.setState({
     players: playersObj
   })
 
 }
-
-
-   
-
 
 showDeal= () => {
   console.log(this.state.players)
@@ -126,9 +120,29 @@ playcard = (i, index, winner) => {
     this.setState(state)
     console.log(this.state.cardsinplay)
 
+};
+
+updateScore = (player) => {
+
+  let playerScore = this.state.players.map(i => i)
+
+for(let i=0; i < playerScore.length; i++) {
+  if (playerScore[i].name === player) {
+    playerScore[i].score++
+
+  }
 }
 
-showOwner = () => {}
+this.setState({
+  players: playerScore
+})
+
+console.log(this.state.players)
+}
+
+showScore = () => {
+
+}
 
   render() {
     const currentCards = 
@@ -153,12 +167,10 @@ showOwner = () => {}
       <div>
       <div className="cardOutline" key={index}>
       <div className="cardActual">{pickedCard.name}</div>
-      <button className="pickButton">Pick a Winner </button>
-      
+      <button className="winnerButton" onClick={() => this.updateScore(pickedCard.cardOwner)}>Pick a Winner </button>
       </div>
       </div>
     )
-
     
     return (
       <div className="container">
@@ -182,6 +194,11 @@ showOwner = () => {}
     <h1>Cards in play</h1>
     <h1>Pick a Winner!</h1>
     <div>{pickACard}</div>
+</div>
+
+<div>
+  <h1>Current Score</h1>
+  <div></div>
 </div>
 
       </div>
