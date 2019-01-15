@@ -118,13 +118,11 @@ playcard = (i, index, winner) => {
     this.state.players[index].cardsInHand.splice(i,1)
     let state = this.state
     this.setState(state)
-    console.log(this.state.cardsinplay)
-
 };
 
 updateScore = (player) => {
 
-  let playerScore = this.state.players.map(i => i)
+let playerScore = this.state.players.map(i => i)
 
 for(let i=0; i < playerScore.length; i++) {
   if (playerScore[i].name === player) {
@@ -136,12 +134,6 @@ for(let i=0; i < playerScore.length; i++) {
 this.setState({
   players: playerScore
 })
-
-console.log(this.state.players)
-}
-
-showScore = () => {
-
 }
 
   render() {
@@ -171,13 +163,22 @@ showScore = () => {
       </div>
       </div>
     )
+
+    const scoreKeeper = this.state.players.map(i => 
+    
+    <div>{i.name}: {i.score}</div>
+    
+    )
+  
+  
+
     
     return (
       <div className="container">
 
       <div className="heroGame">
-  <h1>Number of players</h1>
-  <div>{this.state.players[0].name === "No Current Players" ? 0 : this.state.names.length }</div>
+  <h1>Score</h1>
+  <div>{scoreKeeper}</div>
   <div>current players</div>
   <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div>
   </div>
