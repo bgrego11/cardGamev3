@@ -66,7 +66,8 @@ let blackSelect = Math.floor(Math.random() * blackMax);
 let currentText = this.state.blackCards[blackSelect].text;
 let currentPick = this.state.blackCards[blackSelect].pick;
 let a = this.state.whiteCards 
-// shuffle function for stack fo cards 
+
+// shuffle function for stack of cards 
 for (let i = a.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [a[i], a[j]] = [a[j], a[i]];
@@ -98,21 +99,33 @@ for (let i = a.length - 1; i > 0; i--) {
 }
 
 showDeal= () => {
-  console.log(this.state.players.length)
-  console.log(this.state.whiteCards.length)
+  console.log(this.state.players)
+  console.log(this.state.cardsinplay)
 }
 
-playcard = (i, index, winner, numPicks) => {
+// play available cards in the amount derived from numPicks
 
+playcard = (i, index, winner, numPicks) => {
   let newCards = this.state.players
 
+  let playerChecker= this.state.cardsinplay
+
   if (numPicks > 0){  
-    this.state.cardsinplay.push({ name: this.state.players[index].cardsInHand[i], 
-                                  cardIndex: index,
-                                  cardOwner: winner})
+    for(let j=0; j< playerChecker.length; j++){
+      if (playerChecker[j].cardIndex === index) {
+        playerChecker[j].name.push(this.state.players[index].cardsInHand[i])
+      console.log(playerChecker)
+      }    
+    }
+
+    this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
+      cardIndex: index,
+      cardOwner: winner})
+    console.log(this.state.cardsinplay)
+
     newCards[index].bcardPick--
     newCards[index].cardsInHand.splice(i,1)
-    
+
     this.setState({
       players: newCards
     })
@@ -123,6 +136,18 @@ playcard = (i, index, winner, numPicks) => {
 
 updateScore = (player) => {
 
+  let newCards = this.state.players
+
+  const blackMax = this.state.blackCards.length-1;
+  let blackSelect = Math.floor(Math.random() * blackMax);
+  let currentText = this.state.blackCards[blackSelect].text;
+  let currentPick = this.state.blackCards[blackSelect].pick;
+
+  for(let k=0; k<newCards.length; k++) {
+    newCards[k].bcardPick= currentPick
+    newCards[k].text = currentText
+  }
+
 let playerScore = this.state.players.map(i => i)
 
 for(let i=0; i < playerScore.length; i++) {
@@ -130,14 +155,28 @@ for(let i=0; i < playerScore.length; i++) {
     playerScore[i].score++
     if(playerScore[i].score ===7) {
       alert(playerScore.name + "winsSSSSSSSSSSSSSSSSSSSSSSS!!")
-
     }
   }
+
+  this.setState({
+    players: newCards,
+    cardsinplay: []
+  })
 }
 
 this.setState({
   players: playerScore
 })
+}
+
+cardsinplay = (playerName) => {
+  let smoke = this.state.cardsinplay
+
+  for (let i =0; i <this.state.smoke.length; i++) {
+    if (smoke[i].name === playerName) {
+
+    }
+  }
 }
 
   render() {
@@ -172,8 +211,6 @@ this.setState({
     <div key={i.name}>{i.name}: {i.score}</div>
     )
   
-  
-
     
     return (
       <div className="container">
@@ -194,7 +231,6 @@ this.setState({
   <div>{currentCards}</div>
 
       <div>
-    <h1>Cards in play</h1>
     <h1>Pick a Winner!</h1>
     <div>{pickACard}</div>
 </div>
