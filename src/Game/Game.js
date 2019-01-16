@@ -55,15 +55,7 @@ handleChange(e) {
   e.preventDefault()
 }
 
-shuffle = (a) => {
-  for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-
+// Initially deal out cards according to names in state
 deal = () => {
  var numOfPlayers = this.state.names.length
 
@@ -106,19 +98,28 @@ for (let i = a.length - 1; i > 0; i--) {
 }
 
 showDeal= () => {
-  console.log(this.state.players)
-  console.log(this.state.whiteCards)
+  console.log(this.state.players.length)
+  console.log(this.state.whiteCards.length)
 }
 
-playcard = (i, index, winner) => {
+playcard = (i, index, winner, numPicks) => {
+
+  let newCards = this.state.players
+
+  if (numPicks > 0){  
     this.state.cardsinplay.push({ name: this.state.players[index].cardsInHand[i], 
                                   cardIndex: index,
                                   cardOwner: winner})
-
-    this.state.players[index].cardsInHand.splice(i,1)
-    let state = this.state
-    this.setState(state)
+    newCards[index].bcardPick--
+    newCards[index].cardsInHand.splice(i,1)
+    
+    this.setState({
+      players: newCards
+    })
+}
 };
+
+// Create object to update scores with forloop then setstate with created variable playerScore and pushes new cards into hand
 
 updateScore = (player) => {
 
@@ -127,7 +128,10 @@ let playerScore = this.state.players.map(i => i)
 for(let i=0; i < playerScore.length; i++) {
   if (playerScore[i].name === player) {
     playerScore[i].score++
+    if(playerScore[i].score ===7) {
+      alert(playerScore.name + "winsSSSSSSSSSSSSSSSSSSSSSSS!!")
 
+    }
   }
 }
 
@@ -149,7 +153,7 @@ this.setState({
                                               <div className="cardActual">
                                                 { card }
                                               </div>
-                                              <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name)}>Play Card</button>
+                                              <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>Play Card</button>
                                               </div>
                                             )}
                                             </div>
@@ -165,9 +169,7 @@ this.setState({
     )
 
     const scoreKeeper = this.state.players.map(i => 
-    
-    <div>{i.name}: {i.score}</div>
-    
+    <div key={i.name}>{i.name}: {i.score}</div>
     )
   
   
@@ -179,8 +181,8 @@ this.setState({
       <div className="heroGame">
   <h1>Score</h1>
   <div>{scoreKeeper}</div>
-  <div>current players</div>
-  <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div>
+  {/* <div>current players</div>
+  <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div> */}
   </div>
   <button onClick={this.deal} className="pickButton">deal cards</button>
 
@@ -195,11 +197,6 @@ this.setState({
     <h1>Cards in play</h1>
     <h1>Pick a Winner!</h1>
     <div>{pickACard}</div>
-</div>
-
-<div>
-  <h1>Current Score</h1>
-  <div></div>
 </div>
 
       </div>
