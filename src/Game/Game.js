@@ -110,7 +110,6 @@ playcard = (i, index, winner, numPicks) => {
   let newCards = this.state.players
 
   let playerChecker= this.state.cardsinplay
-  console.log(numPicks)
   
 
   if (numPicks > 0){  
@@ -118,22 +117,22 @@ playcard = (i, index, winner, numPicks) => {
       this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
         playerIndex: index,
         cardOwner: winner})
-      console.log(this.state.cardsinplay)
+
     }
     else {
-      console.log(playerChecker[0].playerIndex)
+
 
     for(let j=0; j< playerChecker.length; j++){
       
       if (playerChecker[j].playerIndex === index) {
         playerChecker[j].name.push(this.state.players[index].cardsInHand[i])
-      console.log(playerChecker)
+
       } 
       else {
         this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
           playerIndex: index,
           cardOwner: winner})
-        console.log(this.state.cardsinplay)
+
       }   
     }
   }
@@ -158,8 +157,31 @@ updateScore = (player) => {
   let blackSelect = Math.floor(Math.random() * blackMax);
   let currentText = this.state.blackCards[blackSelect].text;
   let currentPick = this.state.blackCards[blackSelect].pick;
+  
+  // resets dealer
+  if (newCards[0].dealer === true) {
+    newCards[0].dealer = false;
+    newCards[1].dealer = true;
+  } else {
+      if (newCards[1].dealer === true) {
+    newCards[1].dealer = false;
+    newCards[2].dealer = true;
+  } else {
+    if (newCards[2].dealer === true && newCards.length > 3) {
+      newCards[2].dealer = false;
+      newCards[3].dealer = true;
+    }  else {
+      newCards[2].dealer = false;
+      newCards[0].dealer = true;
+    }
+  }
+  }
 
+
+  
   for(let k=0; k<newCards.length; k++) {
+
+    
     newCards[k].bcardPick= currentPick
     newCards[k].text = currentText
   }
@@ -206,7 +228,7 @@ cardsinplay = (playerName) => {
     </div>
   )
     const currentCards = 
-    this.state.players.map((i, index) => <div key={index}>
+    this.state.players.map((i, index) =>    <div key={index}>
                                             <div className="cardFrame">
                                             <h1>{i.name}</h1>
                                             <h2>Black Card</h2>
@@ -247,11 +269,6 @@ cardsinplay = (playerName) => {
 
 
   <div>{currentCards}</div>
-
-      <div>
-    <h1>Pick a Winner!</h1>
-    <div>{pickACard}</div>
-</div>
 
       </div>
     );
