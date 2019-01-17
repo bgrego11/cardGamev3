@@ -109,19 +109,26 @@ playcard = (i, index, winner, numPicks) => {
   let newCards = this.state.players
 
   let playerChecker= this.state.cardsinplay
+  console.log(playerChecker)
+  console.log(index)
+
+  
 
   if (numPicks > 0){  
     for(let j=0; j< playerChecker.length; j++){
-      if (playerChecker[j].cardIndex === index) {
+      if (playerChecker[j].playerIndex === index) {
         playerChecker[j].name.push(this.state.players[index].cardsInHand[i])
       console.log(playerChecker)
-      }    
+      } 
+      else {
+        this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
+          playerIndex: index,
+          cardOwner: winner})
+        console.log(this.state.cardsinplay)
+      }   
     }
 
-    this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
-      cardIndex: index,
-      cardOwner: winner})
-    console.log(this.state.cardsinplay)
+    
 
     newCards[index].bcardPick--
     newCards[index].cardsInHand.splice(i,1)
