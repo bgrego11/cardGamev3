@@ -91,6 +91,7 @@ for (let i = a.length - 1; i > 0; i--) {
       dealer: false
     })
   }
+  playersObj[0].dealer = true
 
   this.setState({
     players: playersObj
@@ -109,13 +110,21 @@ playcard = (i, index, winner, numPicks) => {
   let newCards = this.state.players
 
   let playerChecker= this.state.cardsinplay
-  console.log(playerChecker)
-  console.log(index)
-
+  console.log(numPicks)
   
 
   if (numPicks > 0){  
+    if (playerChecker.length === 0) {
+      this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
+        playerIndex: index,
+        cardOwner: winner})
+      console.log(this.state.cardsinplay)
+    }
+    else {
+      console.log(playerChecker[0].playerIndex)
+
     for(let j=0; j< playerChecker.length; j++){
+      
       if (playerChecker[j].playerIndex === index) {
         playerChecker[j].name.push(this.state.players[index].cardsInHand[i])
       console.log(playerChecker)
@@ -127,7 +136,7 @@ playcard = (i, index, winner, numPicks) => {
         console.log(this.state.cardsinplay)
       }   
     }
-
+  }
     
 
     newCards[index].bcardPick--
@@ -171,6 +180,8 @@ for(let i=0; i < playerScore.length; i++) {
   })
 }
 
+// need to increment the dealer by 1 here
+
 this.setState({
   players: playerScore
 })
@@ -186,7 +197,14 @@ cardsinplay = (playerName) => {
   }
 }
 
-  render() {
+  render() { let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
+    <div>
+    <div className="cardOutline" key={index}>
+    <div className="cardActual">{pickedCard.name}</div>
+    <button className="winnerButton" onClick={() => this.updateScore(pickedCard.cardOwner)}>Pick a Winner </button>
+    </div>
+    </div>
+  )
     const currentCards = 
     this.state.players.map((i, index) => <div key={index}>
                                             <div className="cardFrame">
@@ -194,7 +212,7 @@ cardsinplay = (playerName) => {
                                             <h2>Black Card</h2>
                                             <h2>{i.bCard}</h2>
                                             <h2>Pick: {i.bcardPick}</h2>
-                                            { i.cardsInHand.map((card, white) =>
+                                            { i.dealer === true ? <div>{pickACard}</div> : i.cardsInHand.map((card, white) =>
                                               <div key={white + 1} className="cardOutline">
                                               <div className="cardActual">
                                                 { card }
@@ -205,14 +223,7 @@ cardsinplay = (playerName) => {
                                             </div>
                                           </div>);
 
-    let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
-      <div>
-      <div className="cardOutline" key={index}>
-      <div className="cardActual">{pickedCard.name}</div>
-      <button className="winnerButton" onClick={() => this.updateScore(pickedCard.cardOwner)}>Pick a Winner </button>
-      </div>
-      </div>
-    )
+   
 
     const scoreKeeper = this.state.players.map(i => 
     <div key={i.name}>{i.name}: {i.score}</div>
