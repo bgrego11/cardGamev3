@@ -88,7 +88,8 @@ for (let i = a.length - 1; i > 0; i--) {
       score: 0,
       bcardPick: currentPick,
       bCard: currentText,
-      dealer: false
+      dealer: false,
+      turn: 0
     })
   }
   playersObj[0].dealer = true
@@ -159,31 +160,54 @@ updateScore = (player) => {
   let currentPick = this.state.blackCards[blackSelect].pick;
   
   // resets dealer
-  if (newCards[0].dealer === true) {
-    newCards[0].dealer = false;
-    newCards[1].dealer = true;
-  } else {
-      if (newCards[1].dealer === true) {
-    newCards[1].dealer = false;
-    newCards[2].dealer = true;
-  } else {
-    if (newCards[2].dealer === true && newCards.length > 3) {
-      newCards[2].dealer = false;
-      newCards[3].dealer = true;
-    }  else {
-      newCards[2].dealer = false;
-      newCards[0].dealer = true;
+console.log(currentText)
+for(let j=0; j<newCards.length; j++){
+  if(newCards[j].turn === newCards.length) {
+    newCards[j].turn= 0
+    newCards[j].dealer = false
+    newCards[0].dealer= true
+  } else{
+    if ( newCards[j].turn < newCards.length) {
+      newCards[j].turn++
     }
-  }
+  
+  
   }
 
+}
+
+
+
+console.log(this.state.players)
+
+
+  // if (newCards[0].dealer === true) {
+  //   newCards[0].dealer = false;
+  //   newCards[1].dealer = true;
+  // } else {
+  //     if (newCards[1].dealer === true) {
+  //   newCards[1].dealer = false;
+  //   newCards[2].dealer = true;
+  // } else {
+  //   if (newCards[2].dealer === true && newCards.length > 3) {
+  //     newCards[2].dealer = false;
+  //     newCards[3].dealer = true;
+  //   }  else {
+  //     newCards[2].dealer = false;
+  //     newCards[0].dealer = true;
+  //   }
+  // }
+  // }
+
+  // let numDealt = this.state.whiteCards
+
+  // numDealt.slice(0,cardsDealt)
 
   
   for(let k=0; k<newCards.length; k++) {
-
     
     newCards[k].bcardPick= currentPick
-    newCards[k].text = currentText
+    newCards[k].bCard = currentText
   }
 
 let playerScore = this.state.players.map(i => i)
