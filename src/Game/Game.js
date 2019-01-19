@@ -113,32 +113,60 @@ playcard = (i, index, winner, numPicks) => {
   
 
   if (numPicks > 0){  
+
+    // no cards yet played
     if (playerChecker.length === 0) {
       this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
         playerIndex: index,
         cardOwner: winner})
-
+        newCards[index].bcardPick--
     }
     else {
 
-
+      let hasPlayedCard 
+      let pCheckIdx
     for(let j=0; j< playerChecker.length; j++){
-      
+      // playing second card for user
       if (playerChecker[j].playerIndex === index) {
-        playerChecker[j].name.push(this.state.players[index].cardsInHand[i])
-
+        hasPlayedCard = true
+        pCheckIdx = j
+        j = playerChecker.length + 1
       } 
       else {
+        hasPlayedCard = false
+      }
+    }
+      // playing first card when cards are already in play
+      if (hasPlayedCard) {
+        if (newCards[index].bcardPick > 0) {
+          playerChecker[pCheckIdx].name.push(this.state.players[index].cardsInHand[i])
+          newCards[index].bcardPick--
+          
+        } 
+        else {
+          console.log("no more picks")
+        }
+        
+      } else {
         this.state.cardsinplay.push({ name: [this.state.players[index].cardsInHand[i]], 
           playerIndex: index,
           cardOwner: winner})
+          newCards[index].bcardPick--
+          console.log(playerChecker)
+          console.log(this.state.cardsinplay)
+          
+      }
 
-      }   
-    }
+        
+        
+        
+       
+         
+    
   }
     
 
-    newCards[index].bcardPick--
+  
     newCards[index].cardsInHand.splice(i,1)
 
     this.setState({
@@ -194,10 +222,19 @@ for(let i=0; i < playerScore.length; i++) {
     }
   }
 
+  let x
+  for (x in newCards) {
+    if (newCards[x].cardsInHand.length < 7) {
+      newCards[x].cardsInHand.push(this.state.whiteCards.splice(0,7 - newCards[x].cardsInHand.length))
+    }
+  }
+
   this.setState({
     players: newCards,
     cardsinplay: []
   })
+   
+
 }
 
 // need to increment the dealer by 1 here
