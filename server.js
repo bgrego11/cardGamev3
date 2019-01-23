@@ -1,36 +1,11 @@
-const io = require('socket.io')();
+var app = require("http").createServer()
+var io = module.exports.io = require("socket.io")(app)
 
-let usersNum = 0;
+const PORT = process.env.PORT || 3001
 
-io.on('connection', (client) => {
-let addedUser = false;
+const Socketmanager = require('./Socketmanager')
 
-client.on('gotthesocket', (a) => {
-  console.log(a)
-  setInterval(() =>
-  client.emit('message', a))
-})
+io.on('connection', Socketmanager)
 
-client.on('clientEvent', function(data) {
-  console.log(data);
-});
-
-
-  usersNum++
-
-  client.on('subscribeToTimer', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      client.emit('timer', usersNum);
-    }, interval);
-  });
-
-
-  client.on("disconnect", () =>{ 
-  usersNum--
-  console.log("Client disconnected")});
-});
-
-const port = process.env.PORT || 8000;
-io.listen(port);
-console.log('listening on port ', port);
+app.listen(PORT, () => 
+console.log('connect to port:' + PORT))
