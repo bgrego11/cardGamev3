@@ -13,24 +13,26 @@ class Home extends Component {
       super(props);
     
       this.state = {
-                socket:null, 
+                socket:'dog', 
                 user: null
       };
       }
   
       
-      componentDidMount() {
-          this.initSocket()
+      componentWillMount() {
+        const socket = io(socketUrl)
+        socket.on("connect", () => {
+            console.log("connected biatch")
+        })
+        this.setState({'socket': socket}, () => {
+          console.log(this.state);
+        })
+        
+          
       }
       
       
-      initSocket = () => {
-          const socket = io(socketUrl)
-          socket.on("connect", () => {
-              console.log("connected biatch")
-          })
-          this.setState({socket})
-      }
+     
   
       setUser = (user) => {
           const {socket} = this.state
@@ -54,7 +56,7 @@ class Home extends Component {
   
               { 
                   // <LoginForm socket={socket} setUser={this.setUser}/>
-                  <Game></Game>
+                  <Game socket={socket} />
                   // :
                   // <ChatContainer socket={socket} user={user} logout={this.logout} />
               }

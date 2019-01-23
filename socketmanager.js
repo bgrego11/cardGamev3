@@ -2,7 +2,7 @@ const io = require('./server.js').io
 
 const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED, 
 		LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
-		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER  } = require('./Events')
+		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER, GAME_UPDATE  } = require('./Events')
 
 const { createUser, createMessage, createChat } = require('./Factories')
 
@@ -39,6 +39,14 @@ module.exports = function(socket){
 
 		io.emit(USER_CONNECTED, connectedUsers)
 		console.log(connectedUsers);
+
+	})
+
+	// game update 
+	socket.on(GAME_UPDATE, (game)=>{
+		
+		io.emit(GAME_UPDATE, game)
+		console.log(game);
 
 	})
 	

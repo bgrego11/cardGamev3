@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decks from '../data/decks';
-
+import {USER_CONNECTED, LOGOUT, GAME_UPDATE} from '../Events';
 import './Game.css'
 
 export default class Game extends Component {
@@ -20,12 +20,8 @@ export default class Game extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
-  componentWillReceiveProps() {
-    this.setState({
-      names: this.props.initPlayers
-    })
-  }
+ 
+  
 
   componentWillMount() {
     if (this.state.cards.length === 0){
@@ -36,12 +32,20 @@ export default class Game extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      blackCards: this.state.cards[0].blackCards,
-      whiteCards: this.state.cards[0].whiteCards,
-    })
+    const { socket } = this.props
+    console.log(socket)
+		this.initSocket(socket)
+    
 
   }
+
+  initSocket = (socket) => {
+    
+    socket.on(GAME_UPDATE, (game) => {
+        this.setState(game)
+    })
+    
+}
 
   handleSubmit(event) {
 
@@ -57,51 +61,62 @@ handleChange(e) {
 
 // Initially deal out cards according to names in state
 deal = () => {
- var numOfPlayers = this.state.names.length
-
- let playersObj = []
-
- const blackMax = this.state.blackCards.length-1;
-let blackSelect = Math.floor(Math.random() * blackMax);
-let currentText = this.state.blackCards[blackSelect].text;
-let currentPick = this.state.blackCards[blackSelect].pick;
-let a = this.state.whiteCards 
-
-// shuffle function for stack of cards 
-for (let i = a.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1));
-  [a[i], a[j]] = [a[j], a[i]];
-}
-
- for (let i = 0; i<numOfPlayers; i++) {
-
-    let playerCardsArray = a.slice(0,7)
-    a.splice(0,7)
-
-    this.setState({
-      whiteCards: a
-    })
-      
-    playersObj.push({
-      name: this.state.names[i],
-      cardsInHand: playerCardsArray,
-      score: 0,
-      bcardPick: currentPick,
-      bCard: currentText,
-      dealer: false,
-      turn: 1
-    })
-  }
-  playersObj[0].dealer = true
-
+  const { socket } = this.props
+  
   this.setState({
-    players: playersObj
-  })
+    blackCards: decks[0].blackCards,
+    whiteCards: decks[0].whiteCards,
+  }, () => {var numOfPlayers = this.state.names.length
 
+    let playersObj = []
+   
+    const blackMax = this.state.blackCards.length-1;
+   let blackSelect = Math.floor(Math.random() * blackMax);
+   let currentText = this.state.blackCards[blackSelect].text;
+   let currentPick = this.state.blackCards[blackSelect].pick;
+   let a = this.state.whiteCards 
+   
+   // shuffle function for stack of cards 
+   for (let i = a.length - 1; i > 0; i--) {
+     const j = Math.floor(Math.random() * (i + 1));
+     [a[i], a[j]] = [a[j], a[i]];
+   }
+   
+    for (let i = 0; i<numOfPlayers; i++) {
+   
+       let playerCardsArray = a.slice(0,7)
+       a.splice(0,7)
+   
+       this.setState({
+         whiteCards: a
+       })
+         
+       playersObj.push({
+         name: this.state.names[i],
+         cardsInHand: playerCardsArray,
+         score: 0,
+         bcardPick: currentPick,
+         bCard: currentText,
+         dealer: false,
+         turn: 1
+       })
+     }
+     playersObj[0].dealer = true
+   
+     this.setState({
+       players: playersObj
+     })
+   
+    
+   })
+ 
 }
 
 showDeal= () => {
+  const { socket } = this.props
   console.log(this.state.players)
+  let game = this.state
+  socket.emit(GAME_UPDATE, game)
 }
 
 // play available cards in the amount derived from numPicks
