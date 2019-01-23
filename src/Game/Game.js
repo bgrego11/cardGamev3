@@ -119,6 +119,13 @@ showDeal= () => {
   socket.emit(GAME_UPDATE, game)
 }
 
+socketShow = () => {
+  const { socket } = this.props
+  socket.on(GAME_UPDATE, (game) => {
+    this.setState(game)
+})
+}
+
 // play available cards in the amount derived from numPicks
 
 playcard = (i, index, winner, numPicks) => {
@@ -315,6 +322,7 @@ cardsinplay = (playerName) => {
 
   <div className="currentCards" >
   <button onClick={this.showDeal} className="pickButton">showplayers</button>
+  <button onClick={this.socketShow} className="pickButton">showplayers</button>
   </div>
 
 

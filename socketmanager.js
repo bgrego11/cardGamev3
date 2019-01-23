@@ -44,9 +44,9 @@ module.exports = function(socket){
 
 	// game update 
 	socket.on(GAME_UPDATE, (game)=>{
-		
+		console.log(game)
 		io.emit(GAME_UPDATE, game)
-		console.log(game);
+		
 
 	})
 	
