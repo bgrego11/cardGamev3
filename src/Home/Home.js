@@ -1,70 +1,69 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
+import {USER_CONNECTED, LOGOUT} from '../Events';
 // import Sidebar from './Sidebar'
 import './Home.css';
 import Game from '../Game/Game';
 
+const socketUrl = "http://localhost:3001"
+
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timestamp: 'no timesamp yet',
-      value: "",
-      userName: "buddy",
-      currentPlayers: [{name: "No Current Players",
-        id:0 
-       }],
-      count: 0
-    }
-
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-
-  handleChange(event) {
-    this.setState({
-      value: event.target.value
-    });
-  }
-
-  handleSubmit(event) {
-
-    if (this.state.currentPlayers[0].name === "No Current Players") {
-      var newNames = []
-    } else {
-    var newerNames = this.state.currentPlayers.slice()
-    }
-    newerNames.push({name: this.state.value,
-                   id: this.state.count+1 
-                  })
+  
+    constructor(props) {
+      super(props);
     
-    this.setState({
-      currentPlayers: newNames,
-      value: ""
-    })
-    
-    event.preventDefault()
+      this.state = {
+                socket:null, 
+                user: null
+      };
+      }
+  
+      
+      componentDidMount() {
+          this.initSocket()
+      }
+      
+      
+      initSocket = () => {
+          const socket = io(socketUrl)
+          socket.on("connect", () => {
+              console.log("connected biatch")
+          })
+          this.setState({socket})
+      }
+  
+      setUser = (user) => {
+          const {socket} = this.state
+          socket.emit(USER_CONNECTED, user);
+          this.setState({user})
+          console.log(user.name)
+      }
+  
+      logout = ()=> {
+          const {socket} = this.state
+          socket.emit(LOGOUT)
+          this.setState({user:null})
+      }
+  
+      render() {
+      const { title } = this.props
+      const { socket } = this.state
+      const { user } = this.state
+      return (
+        <div className="container">
+  
+              { 
+                  // <LoginForm socket={socket} setUser={this.setUser}/>
+                  <Game></Game>
+                  // :
+                  // <ChatContainer socket={socket} user={user} logout={this.logout} />
+              }
+              
+                  </div>
+      );
+    }
   }
+  
 
-  render() {
-    const users = this.state.currentPlayers.map((i, index) => <li key={index}>{i.name}</li> )
-
-    return (
-      <div className="homeCont">
-     
-     <p>Users Id's: {users}</p>
-     <form onSubmit={this.handleSubmit}>
-        <label>
-          Add a player:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <Game initPlayers={this.state.currentPlayers.map(i=>i.name)} />
-      </div>
-    );
-  }
-}
 
 export default Home;
