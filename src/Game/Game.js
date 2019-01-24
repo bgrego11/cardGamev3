@@ -14,7 +14,11 @@ export default class Game extends Component {
       names:["john", "dave", "sven"],
       dealer: "",
       cardsinplay: [],
-      score: []
+      score: [],
+      yourName: [{
+        name: "",
+        id: ""
+      }]
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -34,10 +38,6 @@ export default class Game extends Component {
   componentDidMount() {
     const { socket } = this.props
     this.initSocket(socket)
-    
-    console.log(this.state.players)
-    let game = this.state
-    socket.emit(GAME_UPDATE, game)
     
 
   }
@@ -299,8 +299,14 @@ cardsinplay = (playerName) => {
   render() { let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
     <div>
     <div className="cardOutline" key={index}>
-    <div className="cardActual">{pickedCard.name}</div>
+    <div className="cardInner">
+    <div className="cardFrame-back">Cards Against Humanity</div>
+    <div className="cardFrame-front">
+    <div className="cardName">
+    {pickedCard.name}</div>
     <button className="winnerButton" onClick={() => this.updateScore(pickedCard.cardOwner)}>Pick a Winner </button>
+    </div>
+    </div>
     </div>
     </div>
   )
@@ -313,10 +319,15 @@ cardsinplay = (playerName) => {
                                             <h2>Pick: {i.bcardPick}</h2>
                                             { i.dealer === true ? <div>{pickACard}</div> : i.cardsInHand.map((card, white) =>
                                               <div key={white + 1} className="cardOutline">
-                                              <div className="cardActual">
-                                                { card }
-                                              </div>
-                                              <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>Play Card</button>
+                                                <div className="cardInner">
+                                                      <div className="cardFrame-back">Cards Against Humanity</div>
+                                                          <div className="cardFrame-front">
+                                                          <div className="cardName">
+                                                          { card }
+                                                          </div>
+                                                          <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>Play Card</button>
+                                                          </div>
+                                                </div>
                                               </div>
                                             )}
                                             </div>
