@@ -2,16 +2,18 @@ const io = require('./server.js').io
 
 const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED, 
 		LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
-		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER, GAME_UPDATE  } = require('./Events')
+		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER, GAME_UPDATE, CURRENTPLAYS  } = require('./Events')
 
 const { createUser, createMessage, createChat } = require('./Factories')
 
 let connectedUsers = { }
 
+let currentUsers = {}
+
 let communityChat = createChat({ isCommunity:true })
 
 module.exports = function(socket){
-					
+
 	// console.log('\x1bc'); //clears console
 	console.log("Socket Id:" + socket.id);
 
@@ -46,8 +48,16 @@ module.exports = function(socket){
 	socket.on(GAME_UPDATE, (game)=>{
 		console.log(game)
 		io.emit(GAME_UPDATE, game)
-		
+	})
 
+	// sign in and store users
+
+	socket.on(CURRENTPLAYS, (newUser) => {
+		console.log(newUser)
+		newUser.id = socket.id
+		console.log(newUser)
+		currentUsers.push(newUser)
+		io.emit(CURRENTPLAYS, currentUsers)
 	})
 	
 	//User disconnects

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-import {USER_CONNECTED, LOGOUT} from '../Events';
+import {USER_CONNECTED, LOGOUT, CURRENTPLAYS} from '../Events';
 // import Sidebar from './Sidebar'
 import './Home.css';
 import Game from '../Game/Game';
@@ -13,32 +13,45 @@ class Home extends Component {
       super(props);
     
       this.state = {
-                socket:'dog', 
+                socket: null, 
                 user: null
       };
       }
   
       
       componentWillMount() {
+        console.log(this.state)
         const socket = io(socketUrl)
         socket.on("connect", () => {
-            console.log("connected biatch")
         })
-        this.setState({'socket': socket}, () => {
-          console.log(this.state);
-        })
-        
-          
+
+        this.setState({'socket': socket
+      })
       }
+
+      componentDidMount() {
+        const {socket} = this.state  
+        this.setState({
+         user: socket.id
+       })
+      }
+
       
-      
+      socketUser = () => {
+        const {socket} = this.state  
+        this.setState({
+              user: socket.id
+          }, () => {
+            console.log(this.state)
+          })
+      }
      
   
       setUser = (user) => {
           const {socket} = this.state
           socket.emit(USER_CONNECTED, user);
           this.setState({user})
-          console.log(user.name)
+          
       }
   
       logout = ()=> {
@@ -53,10 +66,11 @@ class Home extends Component {
       const { user } = this.state
       return (
         <div className="container">
+          <button onClick={this.socketUser} className="pickButton">showplayers</button>
   
-              { 
+              {this.state.user === null ? <div>sign in</div> : 
                   // <LoginForm socket={socket} setUser={this.setUser}/>
-                  <Game socket={socket} />
+                  <Game socket={socket} user={user}/>
                   // :
                   // <ChatContainer socket={socket} user={user} logout={this.logout} />
               }

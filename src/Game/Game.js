@@ -37,22 +37,44 @@ export default class Game extends Component {
 
   componentDidMount() {
     const { socket } = this.props
+    const { user } = this.props
     this.initSocket(socket)
-    
 
+    // let newPlayer = this.state.names
+    // console.log(this.props.users)
+    // newPlayer.push(this.props.users)
+    
+    // this.setState({
+    //   names: newPlayer
+    // })
   }
 
   initSocket = (socket) => {
     
+    socket.on('connect', () => {
+      this.setState({
+        yourName: socket.id
+      })
+    })
+    
     socket.on(GAME_UPDATE, (game) => {
         this.setState(game)
     })
+
+    
     
 }
 
   handleSubmit(event) {
 
   event.preventDefault()
+}
+
+setUser = (user) => {
+  const {socket} = this.state
+  socket.emit(USER_CONNECTED, user);
+  this.setState({user})
+  console.log(user.name)
 }
 
 handleChange(e) {
@@ -111,7 +133,6 @@ deal = () => {
        players: playersObj
      }, () => {
       const { socket } = this.props
-      console.log(this.state.players)
       let game = this.state
       socket.emit(GAME_UPDATE, game)
      })
@@ -122,7 +143,7 @@ deal = () => {
  
 }
 
-showDeal= () => {
+showDeal = () => {
   const { socket } = this.props
   console.log(this.state.players)
   let game = this.state
@@ -130,10 +151,10 @@ showDeal= () => {
 }
 
 socketShow = () => {
-  const { socket } = this.props
-  socket.on(GAME_UPDATE, (game) => {
-    this.setState(game)
-})
+//   socket.on(GAME_UPDATE, (game) => {
+//     this.setState(game)
+// })
+console.log(this.state)
 }
 
 // play available cards in the amount derived from numPicks
@@ -187,14 +208,7 @@ playcard = (i, index, winner, numPicks) => {
           console.log(playerChecker)
           console.log(this.state.cardsinplay)
           
-      }
-
-        
-        
-        
-       
-         
-    
+        }  
   }
     
 
