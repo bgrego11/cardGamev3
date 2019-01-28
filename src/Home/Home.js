@@ -14,7 +14,8 @@ class Home extends Component {
     
       this.state = {
                 socket: null, 
-                user: null
+                user: null,
+                allPlayers: []
       };
       }
   
@@ -25,8 +26,10 @@ class Home extends Component {
         socket.on("connect", () => {
         })
 
-        this.setState({'socket': socket
+        this.setState({'socket': socket,
+          allPlayers: []
       })
+
       }
 
       componentDidMount() {
@@ -34,16 +37,27 @@ class Home extends Component {
         this.setState({
          user: socket.id
        })
+
+       socket.on(CURRENTPLAYS, (currentUsers) => {
+         let newfucks = this.state.allPlayers
+         newfucks.push(currentUsers)
+        this.setState({
+          allPlayers: newfucks
+        })
+      })
+
       }
+
 
       
       socketUser = () => {
         const {socket} = this.state  
-        this.setState({
-              user: socket.id
-          }, () => {
-            console.log(this.state)
-          })
+  let plays = []
+  plays.push(socket.id)
+  console.log(plays)
+        socket.emit(CURRENTPLAYS, plays) 
+
+  console.log(this.state)
       }
      
   
@@ -51,6 +65,8 @@ class Home extends Component {
           const {socket} = this.state
           socket.emit(USER_CONNECTED, user);
           this.setState({user})
+
+          
           
       }
   
@@ -74,6 +90,9 @@ class Home extends Component {
                   // :
                   // <ChatContainer socket={socket} user={user} logout={this.logout} />
               }
+              <div>
+                {this.state.allPlayers}
+              </div>
               
                   </div>
       );

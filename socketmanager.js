@@ -8,14 +8,13 @@ const { createUser, createMessage, createChat } = require('./Factories')
 
 let connectedUsers = { }
 
-let currentUsers = {}
 
 let communityChat = createChat({ isCommunity:true })
 
 module.exports = function(socket){
 
 	// console.log('\x1bc'); //clears console
-	console.log("Socket Id:" + socket.id);
+	newUser(socket.id)
 
 	let sendMessageToChatFromUser;
 
@@ -46,18 +45,16 @@ module.exports = function(socket){
 
 	// game update 
 	socket.on(GAME_UPDATE, (game)=>{
-		console.log(game)
+		console.log(game.names)
 		io.emit(GAME_UPDATE, game)
 	})
 
 	// sign in and store users
-
-	socket.on(CURRENTPLAYS, (newUser) => {
-		console.log(newUser)
-		newUser.id = socket.id
-		console.log(newUser)
-		currentUsers.push(newUser)
-		io.emit(CURRENTPLAYS, currentUsers)
+		let smokey = []
+	socket.on(CURRENTPLAYS, (plays) => {
+		smokey.push(plays)
+		console.log(smokey)
+		io.emit(CURRENTPLAYS, plays)
 	})
 	
 	//User disconnects
@@ -149,6 +146,12 @@ function addUser(userList, user){
 	let newList = Object.assign({}, userList)
 	newList[user.name] = user
 	return newList
+}
+
+let currentUsers = []
+
+function newUser(plusUser){
+	currentUsers.push(plusUser)
 }
 
 /*

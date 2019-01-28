@@ -40,13 +40,6 @@ export default class Game extends Component {
     const { user } = this.props
     this.initSocket(socket)
 
-    // let newPlayer = this.state.names
-    // console.log(this.props.users)
-    // newPlayer.push(this.props.users)
-    
-    // this.setState({
-    //   names: newPlayer
-    // })
   }
 
   initSocket = (socket) => {
@@ -136,7 +129,6 @@ deal = () => {
       let game = this.state
       socket.emit(GAME_UPDATE, game)
      })
-   
     
    })
    
@@ -151,9 +143,7 @@ showDeal = () => {
 }
 
 socketShow = () => {
-//   socket.on(GAME_UPDATE, (game) => {
-//     this.setState(game)
-// })
+
 console.log(this.state)
 }
 
