@@ -38,7 +38,11 @@ export default class Game extends Component {
   componentDidMount() {
     const { socket } = this.props
     const { user } = this.props
+    const { currentUsers } =this.props
     this.initSocket(socket)
+    this.setState({
+      yourName: currentUsers
+    })
 
   }
 

@@ -7,6 +7,8 @@ const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
 const { createUser, createMessage, createChat } = require('./Factories')
 
 let connectedUsers = { }
+let storeUsers = [];
+let i = 0;
 
 
 let communityChat = createChat({ isCommunity:true })
@@ -14,7 +16,6 @@ let communityChat = createChat({ isCommunity:true })
 module.exports = function(socket){
 
 	// console.log('\x1bc'); //clears console
-	newUser(socket.id)
 
 	let sendMessageToChatFromUser;
 
@@ -45,16 +46,18 @@ module.exports = function(socket){
 
 	// game update 
 	socket.on(GAME_UPDATE, (game)=>{
-		console.log(game.names)
 		io.emit(GAME_UPDATE, game)
 	})
 
 	// sign in and store users
-		let smokey = []
+
 	socket.on(CURRENTPLAYS, (plays) => {
-		smokey.push(plays)
-		console.log(smokey)
-		io.emit(CURRENTPLAYS, plays)
+		
+		storeUsers.push(plays)
+		console.log("the beginning")
+		console.log(storeUsers)
+		console.log(plays)
+		io.emit(CURRENTPLAYS, storeUsers)
 	})
 	
 	//User disconnects
@@ -148,11 +151,6 @@ function addUser(userList, user){
 	return newList
 }
 
-let currentUsers = []
-
-function newUser(plusUser){
-	currentUsers.push(plusUser)
-}
 
 /*
 * Removes user from the list passed in.
