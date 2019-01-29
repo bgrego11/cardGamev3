@@ -8,7 +8,6 @@ const { createUser, createMessage, createChat } = require('./Factories')
 
 let connectedUsers = { }
 let storeUsers = [];
-let i = 0;
 
 
 let communityChat = createChat({ isCommunity:true })

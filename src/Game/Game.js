@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decks from '../data/decks';
-import {USER_CONNECTED, LOGOUT, GAME_UPDATE} from '../Events';
+import {USER_CONNECTED, LOGOUT, GAME_UPDATE, CURRENTPLAYS} from '../Events';
 import './Game.css'
 
 export default class Game extends Component {
@@ -24,6 +24,7 @@ export default class Game extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+
  
   
 
@@ -37,29 +38,23 @@ export default class Game extends Component {
 
   componentDidMount() {
     const { socket } = this.props
-    const { user } = this.props
-    const { currentUsers } =this.props
     this.initSocket(socket)
-    this.setState({
-      yourName: currentUsers
-    })
 
   }
 
   initSocket = (socket) => {
-    
     socket.on('connect', () => {
-      this.setState({
-        yourName: socket.id
-      })
     })
     
     socket.on(GAME_UPDATE, (game) => {
         this.setState(game)
     })
-
     
-    
+    socket.on(CURRENTPLAYS, (currentUsers) => {
+      this.setState({
+        names: currentUsers
+      })
+    })
 }
 
   handleSubmit(event) {
@@ -115,7 +110,7 @@ deal = () => {
        })
          
        playersObj.push({
-         name: this.state.names[i],
+         name: this.state.names[i].id,
          cardsInHand: playerCardsArray,
          score: 0,
          bcardPick: currentPick,
@@ -133,10 +128,7 @@ deal = () => {
       let game = this.state
       socket.emit(GAME_UPDATE, game)
      })
-    
    })
-   
- 
 }
 
 showDeal = () => {
@@ -147,8 +139,8 @@ showDeal = () => {
 }
 
 socketShow = () => {
-
-console.log(this.state)
+  const { currentUsers } =this.props
+  console.log(this.state.names)
 }
 
 // play available cards in the amount derived from numPicks
@@ -304,7 +296,11 @@ cardsinplay = (playerName) => {
   }
 }
 
-  render() { let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
+  render() { 
+    const { socket } = this.props
+    let mySocketID = socket.id
+    
+    let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
     <div>
     <div className="cardOutline" key={index}>
     <div className="cardInner">
@@ -319,7 +315,10 @@ cardsinplay = (playerName) => {
     </div>
   )
     const currentCards = 
-    this.state.players.map((i, index) =>    <div key={index}>
+    
+    this.state.players.map((i, index) =>   
+    i.name === mySocketID ? 
+    <div key={index}>
                                             <div className="cardFrame">
                                             <h1>{i.name}</h1>
                                             <h2>Black Card</h2>
@@ -339,7 +338,9 @@ cardsinplay = (playerName) => {
                                               </div>
                                             )}
                                             </div>
-                                          </div>);
+                                          </div>
+                                          : <div></div>
+                                          );
 
    
 
