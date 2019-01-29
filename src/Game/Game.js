@@ -358,7 +358,13 @@ cardsinplay = (playerName) => {
   {/* <div>current players</div>
   <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div> */}
   </div>
+  {this.state.names.length < 3 ? <h1>Please wait for more players to join</h1> :
+  <div>
+  <h1>There are currently {this.state.names.length} players</h1>
+  <h1>Would you like to start?</h1> 
   <button onClick={this.deal} className="pickButton">deal cards</button>
+</div>
+  }
 
   <div className="currentCards" >
   <button onClick={this.showDeal} className="pickButton">showplayers</button>
