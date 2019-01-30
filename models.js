@@ -1,15 +1,3 @@
-var app = require("http").createServer()
-var io = module.exports.io = require("socket.io")(app)
-
-const PORT = process.env.PORT || 3001
-
-const Socketmanager = require('./Socketmanager')
-
-io.on('connection', Socketmanager)
-
-app.listen(PORT, () => 
-console.log('connect to port:' + PORT))
-
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://heroku_2x8x1pf5:77rq0ebp3pidpukjth60bu8sq1@ds115214.mlab.com:15214/heroku_2x8x1pf5', {useNewUrlParser: true});
@@ -27,7 +15,7 @@ const Game = mongoose.model('Game',
 }
 );
 
-let game = new Game({ 
+let game = new Game({ {
     blackCards: ["card 1","card 2"],
     whiteCards: ["card 1","card 2"],
     cards: ["card 1","card 2"],
