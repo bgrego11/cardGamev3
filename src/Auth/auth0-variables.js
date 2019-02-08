@@ -1,5 +1,5 @@
 export const AUTH_CONFIG = {
-    domain: 'snyder.auth0.com',
-    clientId: 'L3sfw2E6qTRsHqkN4MQ3jgghPYaU9M9O',
+    domain: 'snydz.auth0.com',
+    clientId: 'ZoKU0RUGkyPh5aigHdeq7IC841Fp9rUY',
     callbackUrl: 'http://localhost:3000/callback'
   }

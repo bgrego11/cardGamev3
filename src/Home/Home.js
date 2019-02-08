@@ -4,6 +4,7 @@ import {USER_CONNECTED, LOGOUT, CURRENTPLAYS} from '../Events';
 // import Sidebar from './Sidebar'
 import './Home.css';
 import Game from '../Game/Game';
+import axios from 'axios'
 
 const socketUrl = "http://localhost:3001"
 
@@ -22,12 +23,15 @@ class Home extends Component {
       
       componentWillMount() {
         const socket = io(socketUrl)
+        axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+    .then(response => this.setState({profile: response.data.name}))
+    .then(
         socket.on("connect", () => {
-          let plays = {name: "jamie",
+          let plays = {name: "hobo",
                     id:  socket.id}
         
         socket.emit(CURRENTPLAYS, plays)
-        })
+        }))
 
         this.setState({'socket': socket
       })
@@ -51,12 +55,8 @@ class Home extends Component {
 
       
       socketUser = () => {
-        const {socket} = this.state  
-
-        let plays = {name: "sammy",
-                      id:  socket.id}
-        
-        socket.emit(CURRENTPLAYS, plays) 
+        axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+    .then(response => this.setState({profile: response.data.name}))
     }
   
       setUser = (user) => {
@@ -68,7 +68,7 @@ class Home extends Component {
       }
 
       checkstate = () => {
-        console.log(this.state.allPlayers)
+        console.log(this.state)
       }
   
       logout = ()=> {
@@ -85,6 +85,7 @@ class Home extends Component {
         <div className="container">
           <button onClick={this.socketUser} className="pickButton">showplayers</button>
           <button onClick={this.checkstate} className="pickButton">check state</button>
+          <h1>{this.state.profile ? this.state.profile : "no name"}</h1>
           <div>
                 {/* {this.state.allPlayers[0].id} */}
               </div>

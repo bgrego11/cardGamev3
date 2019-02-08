@@ -3,6 +3,7 @@ import { Redirect, Route, Router } from 'react-router-dom';
 import App from './App';
 import Home from './Home/Home';
 import Game from './Game/Game';
+import Profile from './Profile/Profile';
 import Callback from './Callback/Callback';
 import Auth from './Auth/Auth';
 import history from './history';
@@ -24,9 +25,9 @@ export const makeMainRoutes = () => {
             !auth.isAuthenticated() ? (<Redirect to="/"/>) : (
             <Home auth={auth} {...props} />
             ))} />
-          <Route path="/Game" render={(props) => (
+            <Route path="/profile" render={(props) => (
             !auth.isAuthenticated() ? (<Redirect to="/"/>) : (
-            <Game auth={auth} {...props} />
+            <Profile auth={auth} {...props} />
             ))} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
