@@ -48,6 +48,7 @@ module.exports = function(socket){
 		io.emit(GAME_UPDATE, game)
 	})
 
+
 	// sign in and store users
 
 	socket.on(CURRENTPLAYS, (plays) => {

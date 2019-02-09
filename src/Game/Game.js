@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decks from '../data/decks';
-import {USER_CONNECTED, LOGOUT, GAME_UPDATE, CURRENTPLAYS} from '../Events';
+import {USER_CONNECTED, GAME_UPDATE, CURRENTPLAYS} from '../Events';
 import './Game.css'
 
 export default class Game extends Component {
@@ -111,6 +111,7 @@ deal = () => {
          
        playersObj.push({
          name: this.state.names[i].id,
+         id:this.state.names[i].name,
          cardsInHand: playerCardsArray,
          score: 0,
          bcardPick: currentPick,
@@ -139,7 +140,7 @@ showDeal = () => {
 }
 
 socketShow = () => {
-  const { currentUsers } =this.props
+
   console.log(this.state.names)
 }
 
@@ -320,7 +321,7 @@ cardsinplay = (playerName) => {
     i.name === mySocketID ? 
     <div key={index}>
                                             <div className="cardFrame">
-                                            <h1>{i.name}</h1>
+                                            <h1>{i.id}</h1>
                                             <h2>Black Card</h2>
                                             <h2>{i.bCard}</h2>
                                             <h2>Pick: {i.bcardPick}</h2>
@@ -339,13 +340,13 @@ cardsinplay = (playerName) => {
                                             )}
                                             </div>
                                           </div>
-                                          : <div></div>
+                                          : <div key={index}></div>
                                           );
 
    
 
     const scoreKeeper = this.state.players.map(i => 
-    <div key={i.name}>{i.name}: {i.score}</div>
+    <div key={i.name}>{i.id}: {i.score}</div>
     )
   
     

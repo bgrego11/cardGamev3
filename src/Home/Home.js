@@ -16,26 +16,35 @@ class Home extends Component {
       this.state = {
                 socket: null, 
                 user: null,
-                allPlayers: null
+                allPlayers: null,
+                profile: "weed"
       };
       }
   
-      
+
       componentWillMount() {
         const socket = io(socketUrl)
-        axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
-    .then(response => this.setState({profile: response.data.name}))
-    .then(
-        socket.on("connect", () => {
-          let plays = {name: "hobo",
-                    id:  socket.id}
-        
-        socket.emit(CURRENTPLAYS, plays)
-        }))
+        const newName = this.state.profile
+  
+        const caller = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+        return await res.data.name;
+}
+   
+      // this.setState({profile: caller()})
+    
+    
+    socket.on("connect", () => {
+      caller().then(name => {
+        let plays = {name:name ,
+          id: socket.id}           
 
+socket.emit(CURRENTPLAYS, plays)
+      })
+      
+    })
+    
         this.setState({'socket': socket
       })
-
       }
 
       componentDidMount() {
@@ -78,7 +87,6 @@ class Home extends Component {
       }
   
       render() {
-      const { title } = this.props
       const { socket } = this.state
       let { allPlayers } = this.state
       return (
@@ -87,13 +95,10 @@ class Home extends Component {
           <button onClick={this.checkstate} className="pickButton">check state</button>
           <h1>{this.state.profile ? this.state.profile : "no name"}</h1>
           <div>
-                {/* {this.state.allPlayers[0].id} */}
               </div>
               {this.state.user === null ? <div>sign in</div> : 
-                  // <LoginForm socket={socket} setUser={this.setUser}/>
                   <Game socket={socket} currentUsers={allPlayers}/>
-                  // :
-                  // <ChatContainer socket={socket} user={user} logout={this.logout} />
+                  
               }
               
                   </div>
