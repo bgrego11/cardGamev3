@@ -26,7 +26,7 @@ class Home extends Component {
         const socket = io(socketUrl)
         const newName = this.state.profile
   
-        const caller = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+        const addUserName = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
         return await res.data.name;
 }
    
@@ -34,11 +34,24 @@ class Home extends Component {
     
     
     socket.on("connect", () => {
-      caller().then(name => {
+      addUserName().then(name => {
         let plays = {name:name ,
           id: socket.id}           
 
 socket.emit(CURRENTPLAYS, plays)
+      })
+      
+    })
+
+    socket.on("disconnect", () => {
+     let removeUserArr = this.state.allPlayers
+      for(let i=0; i < removeUserArr.length; i++) {
+        if (removeUserArr[i].id === socket.id) {
+          removeUserArr.splice(i,1)
+        }
+      }
+      this.setState({
+        allPlayers: removeUserArr
       })
       
     })

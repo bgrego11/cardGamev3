@@ -54,9 +54,15 @@ module.exports = function(socket){
 	socket.on(CURRENTPLAYS, (plays) => {
 		
 		storeUsers.push(plays)
-		console.log("the beginning")
-		console.log(storeUsers)
-		console.log(plays)
+		io.emit(CURRENTPLAYS, storeUsers)
+	})
+
+	socket.on('disconnect', () => {
+		for(let i=0; i<storeUsers.length; i++){
+			if (socket.id === storeUsers[i].id){
+				storeUsers.splice(i,1)
+			}
+		}
 		io.emit(CURRENTPLAYS, storeUsers)
 	})
 	
