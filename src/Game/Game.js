@@ -301,6 +301,7 @@ cardsinplay = (playerName) => {
     let pickACard = 
   <div>
     <h1>Cards In Play</h1>
+    <h3>(You Are the Dealer)</h3>
     {  
   this.state.cardsinplay.map((pickedCard, index) => 
     <div>
@@ -321,6 +322,8 @@ cardsinplay = (playerName) => {
   )
     }
     </div>
+
+    // show current cards in play to non-dealer so they can see other cards in play
 
   let nonDealerPicks = 
   <div>
@@ -358,9 +361,6 @@ cardsinplay = (playerName) => {
             <div className="score">
             {scoreKeeper}
             </div>
-            {/* <h3>Black Card</h3>
-            <h3>{i.bCard}</h3>
-            <h3>Pick: {i.bcardPick}</h3> */}
 
 <div className="whiteCardBox"> 
             { i.dealer === true ?
