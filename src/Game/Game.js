@@ -110,6 +110,7 @@ deal = () => {
        playersObj.push({
          name: this.state.names[i].id,
          id:this.state.names[i].name,
+         picture: this.state.names[i].picture,
          cardsInHand: playerCardsArray,
          score: 0,
          bcardPick: currentPick,
@@ -309,13 +310,22 @@ cardsinplay = (playerName) => {
     </div>
     </div>
   )
+
+  // displays scores of all players
+  const scoreKeeper = this.state.players.map(i => 
+    <div key={i.name}>{i.id}: {i.score}</div>
+    )
+
+  // display/logic of all players displays and layouts
     const currentCards = 
     
     this.state.players.map((i, index) =>   
     i.name === mySocketID ? 
     <div key={index}>
             <div className="cardFrame">
-            <h2>{i.id}</h2>
+            <div className="score">
+            {scoreKeeper}
+            </div>
             <h3>Black Card</h3>
             <h3>{i.bCard}</h3>
             <h3>Pick: {i.bcardPick}</h3>
@@ -337,12 +347,19 @@ cardsinplay = (playerName) => {
           : <div key={index}></div>
           );
 
-   
 
-    const scoreKeeper = this.state.players.map(i => 
-    <div key={i.name}>{i.id}: {i.score}</div>
-    )
+// displays currently signed in player in top right along with avatar picture
+  const heading = this.state.names.map((i, index) => 
+  i.id === mySocketID ?
+  <div key={index}>
+  <div className="playerName">{i.name}</div>
+  <img className="playerPic" src={i.picture} alt={i.id + `'s avatar`}></img>
+  </div>
+  : null
+  
+  )
 
+  // displays all players currently signed into game 
     const inGamePlayers = this.state.names.map((i,index) => 
      <div key={index + 22}>{i.name}</div> )
   
@@ -350,9 +367,9 @@ cardsinplay = (playerName) => {
     return (
       <div className="gameContainer">
         { this.state.gameInProgress ? null :
-          <div class="game-flip-card">
-            <div class="game-flip-card-inner">
-              <div class="game-flip-card-front">
+          <div className="game-flip-card">
+            <div className="game-flip-card-inner">
+              <div className="game-flip-card-front">
 
                 <div className="heroGame">
                   <h1>Players In Game</h1>
@@ -373,7 +390,7 @@ cardsinplay = (playerName) => {
   }
   
         </div>
-        <div class="game-flip-card-back">
+        <div className="game-flip-card-back">
           <h1>Cards</h1> 
           <h1>Against</h1> 
           <h1>Humanity</h1>
@@ -382,6 +399,7 @@ cardsinplay = (playerName) => {
     </div>
         }
 
+  <div>{heading}</div>
   <div>{currentCards}</div>
 
       </div>

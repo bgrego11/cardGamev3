@@ -26,14 +26,17 @@ class Home extends Component {
         const socket = io(socketUrl)
   
         const addUserName = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
-        return await res.data.name;
+        return await res.data;
 }
     
     
     socket.on("connect", () => {
       addUserName().then(name => {
-        let plays = {name:name ,
-          id: socket.id}
+        let plays = {
+          name:name.name,
+          id: socket.id,
+          picture: name.picture
+        }
           this.setState({
             profile: name
           })           

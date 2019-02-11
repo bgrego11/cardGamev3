@@ -31,8 +31,8 @@ width: 100%;
     padding: 20px;
     text-align: center;
     width:100%;
-    height: 700px;
-    background: rgb(192, 191, 191);
+    height: calc(100vh - 50px);
+    background: white;
     color: black;
 }
 
@@ -110,7 +110,28 @@ width: 100%;
     height: 80px;
 }
 
+.score {
+    position: absolute;
+    top: 70px;
+    right: 150px;
+}
 
+.playerName {
+    position: absolute;
+    top: 12px;
+    right: 40px;
+    font-size: 20px;
+    font-family: 'Roboto Slab', serif;
+    color: white;
+}
+
+.playerPic {
+    width: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px;
+    right: 200px;
+}
 
 .pickButton {
     margin-top: 10px;
