@@ -296,20 +296,52 @@ cardsinplay = (playerName) => {
     const { socket } = this.props
     let mySocketID = socket.id
     
-    let pickACard = this.state.cardsinplay.map((pickedCard, index) => 
+
+    // Show current cards in play to dealer to pick
+    let pickACard = 
+  <div>
+    <h1>Cards In Play</h1>
+    {  
+  this.state.cardsinplay.map((pickedCard, index) => 
     <div>
-    <div className="cardOutline" key={index}>
-    <div className="cardInner">
-    <div className="cardFrame-back">Cards Against Humanity</div>
-    <div className="cardFrame-front">
-    <div className="cardName">
-    {pickedCard.name}</div>
-    <button className="winnerButton" onClick={() => this.updateScore(pickedCard.cardOwner)}>Pick a Winner </button>
-    </div>
-    </div>
-    </div>
+      <div className="cardOutline" key={index}>
+        <div className="cardInner">
+          <div className="cardFrame-back">Cards Against Humanity</div>
+            <div className="cardFrame-front">
+              <div className="cardName">
+                  {pickedCard.name}
+              </div>
+                <button className="winnerButton" onClick={() => this.updateScore(pickedCard.cardOwner)}>
+                    Pick a Winner 
+                </button>
+          </div>
+        </div>
+      </div>
     </div>
   )
+    }
+    </div>
+
+  let nonDealerPicks = 
+  <div>
+  <h1>Cards In Play</h1>
+  {  
+  this.state.cardsinplay.map((pickedCard, index) => 
+  <div>
+    <div className="cardOutline" key={index}>
+      <div className="cardInner">
+        <div className="cardFrame-back">Cards Against Humanity</div>
+          <div className="cardFrame-front">
+            <div className="cardName">
+                {pickedCard.name}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)
+  }
+  </div>
 
   // displays scores of all players
   const scoreKeeper = this.state.players.map(i => 
@@ -326,22 +358,80 @@ cardsinplay = (playerName) => {
             <div className="score">
             {scoreKeeper}
             </div>
-            <h3>Black Card</h3>
+            {/* <h3>Black Card</h3>
             <h3>{i.bCard}</h3>
-            <h3>Pick: {i.bcardPick}</h3>
-            { i.dealer === true ? <div>{pickACard}</div> : i.cardsInHand.map((card, white) =>
+            <h3>Pick: {i.bcardPick}</h3> */}
+
+<div className="whiteCardBox"> 
+            { i.dealer === true ?
+          <div>
+            <div className="dealerPicks">{pickACard}</div> 
+            {
+            i.cardsInHand.map((card, white) => 
+            <div>            
+                  <div key={white + 1} className="cardOutline">
+                          <div className="cardInner">
+                              <div className="cardFrame-back">Cards Against Humanity</div>
+                                    <div className="cardFrame-front">
+                                        <div className="cardName">
+                                          { card }
+                                        </div>
+                              </div>
+                          </div>
+                  </div>
+            </div>
+            )
+            }
+
+<div className="cardOutline" key={index}>
+      <div className="blackCardInner">
+        <div className="cardFrame-back">Cards Against Humanity</div>
+          <div className="cardFrame-front">
+            <div className="cardName">
+                <div>{i.bCard}</div>
+                <div>Pick: {i.bcardPick}</div>
+            </div>
+        </div>
+      </div>
+  </div>
+          </div>
+            : 
+            <div>
+            <div className="dealerPicks">{nonDealerPicks}</div> 
+            {
+            i.cardsInHand.map((card, white) =>
               <div key={white + 1} className="cardOutline">
                 <div className="cardInner">
-                      <div className="cardFrame-back">Cards Against Humanity</div>
+                    <div className="cardFrame-back">Cards Against Humanity</div>
                           <div className="cardFrame-front">
-                          <div className="cardName">
-                          { card }
-                          </div>
-                          <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>Play Card</button>
-                          </div>
+                              <div className="cardName">
+                                { card }
+                              </div>
+                                <button id= { white + ": " + index } 
+                                className="pickButton"  
+                                onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>
+                                Play Card
+                                </button>
+                    </div>
                 </div>
               </div>
-            )}
+           
+            )
+            }
+<div className="cardOutline" key={index}>
+      <div className="blackCardInner">
+        <div className="cardFrame-back">Cards Against Humanity</div>
+          <div className="cardFrame-front">
+            <div className="cardName">
+                <div>{i.bCard}</div>
+                <div>Pick: {i.bcardPick}</div>
+            </div>
+        </div>
+      </div>
+  </div>
+            </div>
+            }
+</div>
             </div>
           </div>
           : <div key={index}></div>
