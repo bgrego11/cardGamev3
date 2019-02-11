@@ -15,6 +15,7 @@ export default class Game extends Component {
       dealer: "",
       cardsinplay: [],
       score: [],
+      gameInProgress: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -78,6 +79,7 @@ deal = () => {
   this.setState({
     blackCards: decks[0].blackCards,
     whiteCards: decks[0].whiteCards,
+    gameInProgress: true
   }, () => {
     
     var numOfPlayers = this.state.names.length
@@ -248,7 +250,7 @@ for(let i=0; i < playerScore.length; i++) {
   if (playerScore[i].name === player) {
     playerScore[i].score++
     if(playerScore[i].score ===7) {
-      alert(playerScore.name + "winsSSSSSSSSSSSSSSSSSSSSSSS!!")
+      console.log(playerScore[i].name + "wonnnnnn")
     }
   }
 
@@ -312,28 +314,28 @@ cardsinplay = (playerName) => {
     this.state.players.map((i, index) =>   
     i.name === mySocketID ? 
     <div key={index}>
-                                            <div className="cardFrame">
-                                            <h1>{i.id}</h1>
-                                            <h2>Black Card</h2>
-                                            <h2>{i.bCard}</h2>
-                                            <h2>Pick: {i.bcardPick}</h2>
-                                            { i.dealer === true ? <div>{pickACard}</div> : i.cardsInHand.map((card, white) =>
-                                              <div key={white + 1} className="cardOutline">
-                                                <div className="cardInner">
-                                                      <div className="cardFrame-back">Cards Against Humanity</div>
-                                                          <div className="cardFrame-front">
-                                                          <div className="cardName">
-                                                          { card }
-                                                          </div>
-                                                          <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>Play Card</button>
-                                                          </div>
-                                                </div>
-                                              </div>
-                                            )}
-                                            </div>
-                                          </div>
-                                          : <div key={index}></div>
-                                          );
+            <div className="cardFrame">
+            <h2>{i.id}</h2>
+            <h3>Black Card</h3>
+            <h3>{i.bCard}</h3>
+            <h3>Pick: {i.bcardPick}</h3>
+            { i.dealer === true ? <div>{pickACard}</div> : i.cardsInHand.map((card, white) =>
+              <div key={white + 1} className="cardOutline">
+                <div className="cardInner">
+                      <div className="cardFrame-back">Cards Against Humanity</div>
+                          <div className="cardFrame-front">
+                          <div className="cardName">
+                          { card }
+                          </div>
+                          <button id= { white + ": " + index } className="pickButton"  onClick={() => this.playcard(white, index, i.name, i.bcardPick)}>Play Card</button>
+                          </div>
+                </div>
+              </div>
+            )}
+            </div>
+          </div>
+          : <div key={index}></div>
+          );
 
    
 
@@ -341,30 +343,44 @@ cardsinplay = (playerName) => {
     <div key={i.name}>{i.id}: {i.score}</div>
     )
 
-    const inGamePlayers = this.state.names.map(i => 
-     <div key={i.id}>{i.name}</div> )
+    const inGamePlayers = this.state.names.map((i,index) => 
+     <div key={index + 22}>{i.name}</div> )
   
     
     return (
-      <div className="container">
+      <div className="gameContainer">
+        { this.state.gameInProgress ? null :
+          <div class="game-flip-card">
+            <div class="game-flip-card-inner">
+              <div class="game-flip-card-front">
 
-      <div className="heroGame">
-  <h1>{ this.state.players.length < 2 ? "Players In Game" : "Score"}</h1>
-  <div>{ this.state.players.length < 2 ? inGamePlayers : scoreKeeper}</div>
-  </div>
-  {this.state.names.length < 3 ? <h1>Please wait for more players to join</h1> :
-  <div>
-  <h1>There are currently {this.state.names.length} players</h1>
-  <h1>Would you like to start?</h1> 
-  <button onClick={this.deal} className="pickButton">deal cards</button>
-</div>
+                <div className="heroGame">
+                  <h1>Players In Game</h1>
+                  <div>{inGamePlayers}</div>
+                </div>
+            
+    {this.state.names.length < 3 ? 
+      <div>
+        <h1>You need {3 - this.state.names.length} more players to begin</h1>
+      </div>                                   
+  :
+    <div>
+      <div>
+        <h1>Would you like to start?</h1> 
+          <button onClick={this.deal} className="pickButton">Deal cards</button>
+      </div>
+    </div>
   }
-
-  <div className="currentCards" >
-  <button onClick={this.showDeal} className="pickButton">showplayers</button>
-  <button onClick={this.socketShow} className="pickButton">showplayers</button>
-  </div>
-
+  
+        </div>
+        <div class="game-flip-card-back">
+          <h1>Cards</h1> 
+          <h1>Against</h1> 
+          <h1>Humanity</h1>
+        </div>
+      </div>
+    </div>
+        }
 
   <div>{currentCards}</div>
 

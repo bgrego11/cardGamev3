@@ -103,10 +103,9 @@ socket.emit(CURRENTPLAYS, plays)
       const { socket } = this.state
       let { allPlayers } = this.state
       return (
-        <div className="container">
+        <div className="homeContainer">
               {this.state.user === null ? <div>sign in</div> : 
-                  <Game socket={socket} currentUsers={allPlayers}/>
-                  
+                  <Game socket={socket} currentUsers={allPlayers}/> 
               }
               
                   </div>
