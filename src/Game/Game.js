@@ -10,15 +10,11 @@ export default class Game extends Component {
       blackCards: "",
       whiteCards: "",
       cards: [],
-      players: [{name: "No Current Players", cardsInHand: []}],
+      players: [],
       names:["john", "dave", "sven"],
       dealer: "",
       cardsinplay: [],
       score: [],
-      yourName: [{
-        name: "",
-        id: ""
-      }]
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -184,7 +180,6 @@ playcard = (i, index, winner, numPicks) => {
           
         } 
         else {
-          console.log("no more picks")
         }
         
       } else {
@@ -192,9 +187,6 @@ playcard = (i, index, winner, numPicks) => {
           playerIndex: index,
           cardOwner: winner})
           newCards[index].bcardPick--
-          console.log(playerChecker)
-          console.log(this.state.cardsinplay)
-          
         }  
   }
     
@@ -348,16 +340,17 @@ cardsinplay = (playerName) => {
     const scoreKeeper = this.state.players.map(i => 
     <div key={i.name}>{i.id}: {i.score}</div>
     )
+
+    const inGamePlayers = this.state.names.map(i => 
+     <div key={i.id}>{i.name}</div> )
   
     
     return (
       <div className="container">
 
       <div className="heroGame">
-  <h1>Score</h1>
-  <div>{scoreKeeper}</div>
-  {/* <div>current players</div>
-  <div>{this.state.names.map((b, index) => <li key={index}>{b}</li>)}</div> */}
+  <h1>{ this.state.players.length < 2 ? "Players In Game" : "Score"}</h1>
+  <div>{ this.state.players.length < 2 ? inGamePlayers : scoreKeeper}</div>
   </div>
   {this.state.names.length < 3 ? <h1>Please wait for more players to join</h1> :
   <div>

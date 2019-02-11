@@ -28,16 +28,22 @@ class App extends Component {
 
           {
               !isAuthenticated() && (
+                
                 <div className="hero">
                 <h1>Cards Against Humaity</h1>
-                  <Button
-                    id="qsLoginBtn"
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.login.bind(this)}
-                  >
-                    Log In
-                  </Button>
+                <div class="flip-card">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <h1>Let the Fun Begin</h1>
+                  <button className="flip-card-button" onClick={this.login.bind(this)} id="qsLoginBtn">Log in | Sign Up</button>
+                    </div>
+                    <div class="flip-card-back">
+                      <h1>Cards</h1> 
+                      <h1>Against</h1> 
+                      <h1>Humanity</h1>
+                    </div>
+                  </div>
+                </div>
                   </div>
                   
                 )
@@ -50,12 +56,9 @@ class App extends Component {
               <div className="link" onClick={this.goTo.bind(this, 'home')}>Cards Against Humanity</div>
 
                 <div className="link" onClick={this.logout.bind(this)}>Log Out</div>
-
-
-</div>
-
-          </div>
-        </div>
+                </div>
+                </div>
+                </div>
                 )
             }
         </div>
