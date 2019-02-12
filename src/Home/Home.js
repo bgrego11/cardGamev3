@@ -6,7 +6,7 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
-const socketUrl = "https://cardsapplication.herokuapp.com/home"
+const socketUrl = "/home"
 
 class Home extends Component {
   
@@ -31,6 +31,7 @@ class Home extends Component {
     
     
     socket.on("connect", () => {
+      console.log(socket.id)
       addUserName().then(name => {
         let plays = {
           name:name.name,
