@@ -25,25 +25,25 @@ class Home extends Component {
       componentWillMount() {
         const socket = io(socketUrl)
   
-        const addUserName = async () => { const res = await axios.get('wild-rice-5480.auth0.com', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
-        return await res.data;
-}
+//         const addUserName = async () => { const res = await axios.get('wild-rice-5480.auth0.com', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+//         return await res.data;
+// }
     
     
     socket.on("connect", () => {
       console.log(socket.id)
-      addUserName().then(name => {
+      // addUserName().then(name => {
         let plays = {
-          name:name.name,
+          name: "buddy",
           id: socket.id,
-          picture: name.picture
+          picture: "https://accounts.google.com/SignOutOptions?hl=en&continue=https://www.google.com/_/chrome/newtab%3Fei%3DTzxeXM25L7Kt_Qanya_wCQ%26rlz%3D1C1JZAP_enUS715US715"
         }
           this.setState({
-            profile: name
+            profile: "buddy"
           })           
 
 socket.emit(CURRENTPLAYS, plays)
-      })
+      // })
       
     })
 
