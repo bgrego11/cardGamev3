@@ -6,7 +6,7 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
-const socketUrl = "/home"
+const socketUrl = "https://cardsapplication.herokuapp.com/home"
 
 class Home extends Component {
   
