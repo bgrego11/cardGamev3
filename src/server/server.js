@@ -5,7 +5,7 @@ const io = module.exports.io = require("socket.io")(server)
 
 const PORT = process.env.PORT || 3001
 
-const Socketmanager = require('./Socketmanager')
+const Socketmanager = require('./socketmanager')
 
 app.use( express.static(__dirname + '/../../build') )
 io.on('connection', Socketmanager)
