@@ -1,13 +1,16 @@
-var app = require("http").createServer()
-var io = module.exports.io = require("socket.io")(app)
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = module.exports.io = require("socket.io")(server)
 
 const PORT = process.env.PORT || 3001
 
 const Socketmanager = require('./Socketmanager')
 
+app.use( express.static(__dirname + './build') )
 io.on('connection', Socketmanager)
 
-app.listen(PORT, () => 
+server.listen(PORT, () => 
 console.log('connect to port:' + PORT))
 
 

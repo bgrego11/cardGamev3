@@ -6,7 +6,7 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
-const socketUrl = "http://localhost:3001"
+const socketUrl = "/home"
 
 class Home extends Component {
   
