@@ -39,6 +39,8 @@ export default class Game extends Component {
 
   }
 
+  // makes initial connection to socket for component
+
   initSocket = (socket) => {
     socket.on('connect', () => {
     })
@@ -129,18 +131,6 @@ deal = () => {
       socket.emit(GAME_UPDATE, game)
      })
    })
-}
-
-showDeal = () => {
-  const { socket } = this.props
-  console.log(this.state.players)
-  let game = this.state
-  socket.emit(GAME_UPDATE, game)
-}
-
-socketShow = () => {
-
-  console.log(this.state.names)
 }
 
 // play available cards in the amount derived from numPicks
@@ -236,13 +226,15 @@ for(let j=0; j<newCards.length; j++){
     }
     }
   
-
+// resets picks for players so they are allowed to pick cards on next turn
   
   for(let k=0; k<newCards.length; k++) {
     
-    newCards[k].bcardPick= currentPick
+    newCards[k].bcardPick = currentPick
     newCards[k].bCard = currentText
   }
+
+// adds point to players score and deploys modal to reset the game and scores when a players score reaches 7(winning score)
 
 let playerScore = this.state.players.map(i => i)
 
@@ -253,6 +245,8 @@ for(let i=0; i < playerScore.length; i++) {
       console.log(playerScore[i].name + "wonnnnnn")
     }
   }
+
+  // redeals number of cards necessary after all cards are played 
 
   let x
   for (x in newCards) {
