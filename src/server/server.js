@@ -10,6 +10,10 @@ const Socketmanager = require('./socketmanager')
 
 app.use( express.static(path.join(__dirname + '/../../build')))
 
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
   io.on('connection', Socketmanager)
 
