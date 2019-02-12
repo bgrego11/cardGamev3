@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3001
 
 const Socketmanager = require('./Socketmanager')
 
-app.use( express.static(__dirname + './build') )
+app.use( express.static(__dirname + '/../../build') )
 io.on('connection', Socketmanager)
 
 server.listen(PORT, () => 
