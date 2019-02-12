@@ -30,13 +30,13 @@ class App extends Component {
                 
                 <div className="hero">
                 <h1>Cards Against Humaity</h1>
-                <div class="flip-card">
-                  <div class="flip-card-inner">
-                    <div class="flip-card-front">
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                    <div className="flip-card-front">
                       <h1>Let the Fun Begin</h1>
                   <button className="flip-card-button" onClick={this.login.bind(this)} id="qsLoginBtn">Log in | Sign Up</button>
                     </div>
-                    <div class="flip-card-back">
+                    <div className="flip-card-back">
                       <h1>Cards</h1> 
                       <h1>Against</h1> 
                       <h1>Humanity</h1>

@@ -201,7 +201,6 @@ playcard = (i, index, winner, numPicks) => {
       players: newCards
     }, () => {
       const { socket } = this.props
-      console.log(this.state.players)
       let game = this.state
       socket.emit(GAME_UPDATE, game)
     })
