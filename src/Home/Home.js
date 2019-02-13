@@ -7,7 +7,7 @@ import Game from '../Game/Game';
 import axios from 'axios'
 
 
-const socketUrl = "/"
+const socketUrl = "/home"
 
 class Home extends Component {
   
