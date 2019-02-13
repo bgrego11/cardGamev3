@@ -23,7 +23,7 @@ class Home extends Component {
   
 
       componentWillMount() {
-        const socket = io(socketUrl)
+        const socket = io()
   
         const addUserName = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
         return await res.data;
