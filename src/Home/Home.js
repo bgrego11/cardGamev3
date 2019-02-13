@@ -6,7 +6,6 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
-// see if this shit works
 
 const socketUrl = "/"
 
@@ -18,8 +17,12 @@ class Home extends Component {
       this.state = {
                 socket: null, 
                 user: null,
-                allPlayers: null,
-                profile: "weed"
+                allPlayers: [{
+                  name: "buddy",
+                  id: "noid",
+                  picture: "https://accounts.google.com/SignOutOptions?hl=en&continue=https://www.google.com/_/chrome/newtab%3Fei%3DTzxeXM25L7Kt_Qanya_wCQ%26rlz%3D1C1JZAP_enUS715US715"
+                }],
+                profile: "hello"
       };
       }
   
