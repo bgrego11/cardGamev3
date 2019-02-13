@@ -1,24 +1,19 @@
-const path = require('path');
-const express = require('express');
-const app = express();
-const server = require('http').createServer(app)
-const io = module.exports.io = require("socket.io").listen(server)
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = module.exports.io = require('socket.io')(server)
 
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 3231
 
-const Socketmanager = require('./socketmanager')
+const SocketManager = require('./SocketManager')
 
-app.use( express.static(path.join(__dirname + '/../../build')))
+app.use(express.static(__dirname + '/../../build'))
 
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
+io.on('connection', SocketManager)
 
-  io.on('connection', Socketmanager)
-
-server.listen(PORT, () => 
-console.log('connect to port:' + PORT))
+server.listen(PORT, ()=>{
+	console.log("Connected to port:" + PORT);
+})
 
 
 // const mongoose = require('mongoose');
