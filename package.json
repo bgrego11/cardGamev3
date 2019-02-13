@@ -25,7 +25,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "node src/server/index.js",
+    "start": "concurrently \"react-scripts start\" \"nodemon src/server/index.js\"",
     "dev": "concurrently \"react-scripts start\" \"nodemon src/server/index.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -6,8 +6,7 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
-
-const socketUrl = "/home"
+const socketUrl = "http://localhost:3001"
 
 class Home extends Component {
   
@@ -17,12 +16,8 @@ class Home extends Component {
       this.state = {
                 socket: null, 
                 user: null,
-                allPlayers: [{
-                  name: "buddy",
-                  id: "noid",
-                  picture: "https://accounts.google.com/SignOutOptions?hl=en&continue=https://www.google.com/_/chrome/newtab%3Fei%3DTzxeXM25L7Kt_Qanya_wCQ%26rlz%3D1C1JZAP_enUS715US715"
-                }],
-                profile: "hello"
+                allPlayers: null,
+                profile: "weed"
       };
       }
   
@@ -30,25 +25,24 @@ class Home extends Component {
       componentWillMount() {
         const socket = io(socketUrl)
   
-//         const addUserName = async () => { const res = await axios.get('wild-rice-5480.auth0.com', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
-//         return await res.data;
-// }
+        const addUserName = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+        return await res.data;
+}
     
     
     socket.on("connect", () => {
-      console.log(socket.id)
-      // addUserName().then(name => {
+      addUserName().then(name => {
         let plays = {
-          name: "buddy",
+          name:name.name,
           id: socket.id,
-          picture: "https://accounts.google.com/SignOutOptions?hl=en&continue=https://www.google.com/_/chrome/newtab%3Fei%3DTzxeXM25L7Kt_Qanya_wCQ%26rlz%3D1C1JZAP_enUS715US715"
+          picture: name.picture
         }
           this.setState({
-            profile: "buddy"
+            profile: name
           })           
 
 socket.emit(CURRENTPLAYS, plays)
-      // })
+      })
       
     })
 
