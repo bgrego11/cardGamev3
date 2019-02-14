@@ -58,6 +58,10 @@ socket.emit(CURRENTPLAYS, plays)
       })
       
     })
+
+    socket.on("connect_error", (e) => {
+      console.log("connect_error", e)
+    })
     
         this.setState({'socket': socket
       })
