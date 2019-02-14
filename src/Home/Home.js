@@ -23,9 +23,9 @@ class Home extends Component {
   
 
       componentWillMount() {
-        const socket = io.connect("https://cardsapplication.herokuapp.com", { secure: true, reconnect: true, rejectUnauthorized: false})
+        const socket = io()
   
-        const addUserName = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+        const addUserName = async () => { const res = await axios.get('wild-rice-5480.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
         return await res.data;
 }
     
