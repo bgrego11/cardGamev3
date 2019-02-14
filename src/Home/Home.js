@@ -24,7 +24,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io()
+        const socket = io.connect("/", { secure: true, reconnect: true, rejectUnauthorized: false})
         
         console.log(socket);
 
