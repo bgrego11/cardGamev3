@@ -13,6 +13,7 @@ app.use(cors())
 app.use(express.static(__dirname + '/../../build'))
 
 io.on('connection', SocketManager)
+console.log(io)
 
 server.listen(PORT, ()=>{
 	console.log("Connected to port:" + PORT);
