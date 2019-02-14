@@ -1,17 +1,19 @@
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
-const io =  require('socket.io').listen(server)
-io.set('origins','*:*')
-
-
+const io = module.exports.io = require('socket.io')(server)
 
 const PORT = process.env.PORT || 3231
-
 
 const SocketManager = require('./socketmanager')
 
 app.use(express.static(__dirname + '/../../build'))
+
+io.on('connection', SocketManager)
+
+server.listen(PORT, ()=>{
+	console.log("Connected to port:" + PORT);
+})
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://heroku_2x8x1pf5:77rq0ebp3pidpukjth60bu8sq1@ds115214.mlab.com:15214/heroku_2x8x1pf5', {useNewUrlParser: true});

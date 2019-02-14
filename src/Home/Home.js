@@ -6,7 +6,7 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
-const socketUrl = "http://localhost:3001"
+// const socketUrl = "http://localhost:3001"
 
 class Home extends Component {
   
@@ -23,7 +23,7 @@ class Home extends Component {
   
 
       componentWillMount() {
-        const socket = io()
+        const socket = io.connect("https://cardsapplication.herokuapp.com", { secure: true, reconnect: true, rejectUnauthorized: false})
   
         const addUserName = async () => { const res = await axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
         return await res.data;
