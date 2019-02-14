@@ -24,7 +24,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io.connect("https://cardsapplication.herokuapp.com/home", { secure: true, reconnect: true, rejectUnauthorized: false})
+        const socket = io()
         
         console.log(socket);
 
