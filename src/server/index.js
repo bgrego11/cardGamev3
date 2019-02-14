@@ -4,10 +4,7 @@ const server = require('http').Server(app)
 const io =  require('socket.io').listen(server)
 
 
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
+
 const PORT = process.env.PORT || 3231
 
 
