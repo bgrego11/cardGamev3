@@ -11,13 +11,14 @@ const SocketManager = require('./socketmanager')
 app.use(cors())
 
 app.use(express.static(__dirname + '/../../build'))
+server.listen(PORT, ()=>{
+	console.log("Connected to port:" + PORT);
+})
 
 io.on('connection', SocketManager)
 console.log(io)
 
-server.listen(PORT, ()=>{
-	console.log("Connected to port:" + PORT);
-})
+
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://heroku_2x8x1pf5:77rq0ebp3pidpukjth60bu8sq1@ds115214.mlab.com:15214/heroku_2x8x1pf5', {useNewUrlParser: true});
