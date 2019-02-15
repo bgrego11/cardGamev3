@@ -1,15 +1,19 @@
-var app = require('http').createServer()
-var io = module.exports.io = require('socket.io')(app);
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = module.exports.io = require('socket.io')(server, { origins: '*:*'})
 
-const PORT = process.env.PORT || 3231
-const SocketManager = require('./SocketManager')
- 
-io.on('connection', SocketManager);
+const PORT = process.env.PORT
 
+const SocketManager = require('./socketmanager')
 
-app.listen(PORT, function(){
-  console.log('listening on *:' + PORT);
-});
+app.use(express.static(__dirname + '/../../build'))
+
+io.on('connection', SocketManager)
+
+server.listen(PORT, ()=>{
+	console.log("Connected to port:" + PORT);
+})
 
 
 // const express = require('express');
