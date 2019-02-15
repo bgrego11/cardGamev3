@@ -6,6 +6,7 @@ import './Home.css';
 import Game from '../Game/Game';
 import axios from 'axios'
 
+
 // const socketUrl = "http://localhost:3001"
 
 class Home extends Component {
@@ -24,7 +25,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io()
+        const socket = io.connect("/" + process.env.REACT_APP_SERVER)
         
         console.log(socket);
 
