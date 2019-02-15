@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "node src/server/servering.js",
-    "heroku-postbuild": "react-scripts start",
+    "heroku-postbuild": "react-scripts build",
     "dev": "concurrently \"react-scripts start\" \"nodemon src/server/index.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
