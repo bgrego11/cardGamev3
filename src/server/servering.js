@@ -1,18 +1,15 @@
-const express = require('express');
-const socketIO = require('socket.io');
-const path = require('path');
+var app = require('http').createServer()
+var io = module.exports.io = require('socket.io')(app);
 
-const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, 'index.html');
+const PORT = process.env.PORT || 3231
+const SocketManager = require('./SocketManager')
+ 
+io.on('connection', SocketManager);
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-const io = socketIO.listen(server);
-
-io.on('connection', SocketManager)
-console.log(io)
+app.listen(PORT, function(){
+  console.log('listening on *:' + PORT);
+});
 
 
 // const express = require('express');

@@ -25,7 +25,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io.connect("/" + process.env.REACT_APP_SERVER)
+        const socket = io.connect("/")
         
         console.log(socket);
 
