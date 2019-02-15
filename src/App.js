@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-// horse
 
 class App extends Component {
 
