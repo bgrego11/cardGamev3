@@ -3,6 +3,7 @@ const app = express()
 const server = require('http').Server(app)
 const io = module.exports.io = require('socket.io')(server, { origins: '*:*'})
 
+// for prod dont use port #
 const PORT = process.env.PORT
 
 const SocketManager = require('./socketmanager')
