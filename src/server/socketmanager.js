@@ -67,14 +67,14 @@ module.exports = function(socket){
 	})
 	
 	//User disconnects
-	// socket.on('disconnect', ()=>{
-	// 	if("user" in socket){
-	// 		connectedUsers = removeUser(connectedUsers, socket.user.name)
+	socket.on('disconnect', ()=>{
+		if("user" in socket){
+			connectedUsers = removeUser(connectedUsers, socket.user.name)
 
-	// 		io.emit(USER_DISCONNECTED, connectedUsers)
-	// 		console.log("Disconnect", connectedUsers);
-	// 	}
-	// })
+			io.emit(USER_DISCONNECTED, connectedUsers)
+			console.log("Disconnect", connectedUsers);
+		}
+	})
 
 
 	//User logsout

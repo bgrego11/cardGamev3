@@ -23,6 +23,10 @@ export const makeMainRoutes = () => {
             !auth.isAuthenticated() ? (<Redirect to="/"/>) : (
             <Home auth={auth} {...props} />
             ))} />
+            <Route path="/profile" render={(props) => (
+            !auth.isAuthenticated() ? (<Redirect to="/"/>) : (
+            <Profile auth={auth} {...props} />
+            ))} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} /> 
