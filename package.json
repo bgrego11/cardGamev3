@@ -27,7 +27,7 @@
   },
   "scripts": {
     "postinstall": "npm run build",
-    "start": "node server.js",
+    "start": "node src/server/servering.js",
     "dev": "concurrently \"react-scripts start\" \"nodemon src/server/index.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
