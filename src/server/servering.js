@@ -1,30 +1,27 @@
-const express = require('express')
-const app = express()
-const server = require('http').Server(app)
-const io = module.exports.io = require('socket.io')(server, { origins: '*:*'})
-
-// for prod dont use port #
+const path = require('path');
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+const io = module.exports.io = require('socket.io')(server, { origins: '*:*'});
 const PORT = process.env.PORT
 
-const SocketManager = require('./socketmanager')
+app.use(express.static(path.join(__dirname, '../../build')));
 
-app.use(express.static(__dirname + '/../../build'))
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 io.on('connection', SocketManager)
+console.log(io)
 
-server.listen(PORT, ()=>{
-	console.log("Connected to port:" + PORT);
-})
+app.listen(PORT)
 
 
 // const express = require('express');
 // const cors = require('cors');
 // const app = express();
-// const server = require('http').Server(app);
-// const io = module.exports.io = require('socket.io')(server, { origins: '*:*'});
 
 
-// const PORT = process.env.PORT || 3231
 
 // const SocketManager = require('./socketmanager')
 
@@ -32,8 +29,8 @@ server.listen(PORT, ()=>{
 
 // app.use(express.static(__dirname + '/../../build'))
 
-// io.on('connection', SocketManager)
-// console.log(io)
+io.on('connection', SocketManager)
+console.log(io)
 
 // server.listen(PORT, ()=>{
 // 	console.log("Connected to port:" + PORT);

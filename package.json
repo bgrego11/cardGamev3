@@ -1,6 +1,6 @@
 {
-  "name": "cardgame",
-  "version": "0.1.0",
+  "name": "cardapplication",
+  "version": "1.0.0",
   "private": true,
   "main": "app.js",
   "dependencies": {
@@ -26,9 +26,9 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts build\" \"node src/server/servering.js\"",
+    "start": "concurrently \"react-scripts start\" \"node src/server/servering.js\"",
     "dev": "concurrently \"react-scripts start\" \"nodemon src/server/index.js\"",
-    "build": "concurrently \"react-scripts build\" \"node src/server/servering.js\"",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
