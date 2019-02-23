@@ -25,7 +25,9 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io.connect("https://salty-shore-68421.herokuapp.com/")
+        const socket = io.connect("https://salty-shore-68421.herokuapp.com/", {
+          transports: ['websocket']
+      })
         
         console.log(socket);
 
