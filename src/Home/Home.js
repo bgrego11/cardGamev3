@@ -7,7 +7,7 @@ import Game from '../Game/Game';
 import axios from 'axios'
 
 
-// const socketUrl = "http://localhost:3001"
+ const socketUrl = "http://localhost:3001"
 
 class Home extends Component {
   
@@ -25,7 +25,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io.connect("/")
+        const socket = io.connect("https://salty-shore-68421.herokuapp.com/")
         
         console.log(socket);
 
