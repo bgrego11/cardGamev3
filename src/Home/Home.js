@@ -25,7 +25,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io.connect(socketUrl)
+        const socket = io.connect("/")
         
         console.log(socket);
 
