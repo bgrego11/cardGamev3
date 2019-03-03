@@ -25,7 +25,7 @@ class Home extends Component {
 
       componentWillMount() {
         
-        const socket = io.connect("https://salty-shore-68421.herokuapp.com/")
+        const socket = io.connect(socketUrl)
         
         console.log(socket);
 
@@ -88,7 +88,7 @@ socket.emit(CURRENTPLAYS, plays)
 
       
       socketUser = () => {
-        axios.get('https://snydz.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
+        axios.get('https://wild-rice-5480.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
     .then(response => this.setState({profile: response.data.name}))
     }
   
