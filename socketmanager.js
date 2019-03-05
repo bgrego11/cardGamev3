@@ -2,9 +2,9 @@ const io = require('./servering.js').io
 
 const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED, 
 		LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
-		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER, GAME_UPDATE, CURRENTPLAYS  } = require('../../Events')
+		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER, GAME_UPDATE, CURRENTPLAYS  } = require('./Events')
 
-const { createUser, createMessage, createChat } = require('../../Factories')
+const { createUser, createMessage, createChat } = require('./Factories')
 
 let connectedUsers = { }
 let storeUsers = [];
