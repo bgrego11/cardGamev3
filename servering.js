@@ -1,4 +1,4 @@
-// Dev setup
+// local dev environemnt server
 
 // var app = require("http").createServer()
 // var io = module.exports.io = require("socket.io")(app)
@@ -13,7 +13,7 @@
 // console.log('connect to port:' + PORT))
 
 
-
+// prod server
 
 const express = require('express')
 const app = express()
