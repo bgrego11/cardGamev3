@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import decks from '../data/decks';
-import {USER_CONNECTED, GAME_UPDATE, CURRENTPLAYS} from '../Events';
+import {GAME_UPDATE, CURRENTPLAYS} from '../Events';
 import './Game.css'
+import Score from './Score/Score'
 
 export default class Game extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ export default class Game extends Component {
       names:["john", "dave", "sven"],
       dealer: "",
       cardsinplay: [],
-      score: [],
       gameInProgress: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,11 +61,12 @@ export default class Game extends Component {
   event.preventDefault()
 }
 
-setUser = (user) => {
-  const {socket} = this.state
-  socket.emit(USER_CONNECTED, user);
-  this.setState({user})
-  console.log(user.name)
+
+snackOpen = (theWin) => {
+  let w = document.getElementById("snackbar");
+  w.className = "show";
+  w.innerHTML= theWin + " scored a point";
+  setTimeout(() => { w.className = w.className.replace("show", ""); }, 3000);
 }
 
 handleChange(e) {
@@ -200,7 +201,6 @@ playcard = (i, index, winner, numPicks) => {
 // Create object to update scores with forloop then setstate with created variable playerScore and pushes new cards into hand
 
 updateScore = (player) => {
-
   let newCards = this.state.players
 
   const blackMax = this.state.blackCards.length-1;
@@ -240,6 +240,7 @@ let playerScore = this.state.players.map(i => i)
 
 for(let i=0; i < playerScore.length; i++) {
   if (playerScore[i].name === player) {
+    this.snackOpen(playerScore[i].id)
     playerScore[i].score++
     if(playerScore[i].score ===7) {
       console.log(playerScore[i].name + "wonnnnnn")
@@ -269,7 +270,6 @@ this.setState({
   players: playerScore
 }, () => {
   const { socket } = this.props
-  console.log(this.state.players)
   let game = this.state
   socket.emit(GAME_UPDATE, game)
 })
@@ -285,9 +285,11 @@ cardsinplay = (playerName) => {
   }
 }
 
+
   render() { 
     const { socket } = this.props
     let mySocketID = socket.id
+    let { players } = this.state
     
 
     // Show current cards in play to dealer to pick
@@ -296,8 +298,9 @@ cardsinplay = (playerName) => {
     <h1>Cards In Play</h1>
     <h3>(You Are the Dealer)</h3>
     {  
+      this.state.cardsinplay.length === this.state.players.length -1 ?
   this.state.cardsinplay.map((pickedCard, index) => 
-    <div>
+    <div key={index}>
       <div className="cardOutline" key={index}>
         <div className="cardInner">
           <div className="cardFrame-back">Cards Against Humanity</div>
@@ -312,7 +315,10 @@ cardsinplay = (playerName) => {
         </div>
       </div>
     </div>
-  )
+  
+  ) :
+  <div>Not Everyone has played their cards</div>
+  
     }
     </div>
 
@@ -322,6 +328,8 @@ cardsinplay = (playerName) => {
   <div>
   <h1>Cards In Play</h1>
   {  
+
+this.state.cardsinplay.length === this.state.players.length -1 ?
   this.state.cardsinplay.map((pickedCard, index) => 
   <div>
     <div className="cardOutline" key={index}>
@@ -336,13 +344,10 @@ cardsinplay = (playerName) => {
     </div>
   </div>
 )
+:
+<div>Not Everyone has played their cards</div>
   }
   </div>
-
-  // displays scores of all players
-  const scoreKeeper = this.state.players.map(i => 
-    <div key={i.name}>{i.id}: {i.score}</div>
-    )
 
   // display/logic of all players displays and layouts
     const currentCards = 
@@ -351,9 +356,6 @@ cardsinplay = (playerName) => {
     i.name === mySocketID ? 
     <div key={index}>
             <div className="cardFrame">
-            <div className="score">
-            {scoreKeeper}
-            </div>
 
 <div className="whiteCardBox"> 
             { i.dealer === true ?
@@ -484,6 +486,8 @@ cardsinplay = (playerName) => {
 
   <div>{heading}</div>
   <div>{currentCards}</div>
+  <Score players={players} />
+  <div id="snackbar"></div>
 
       </div>
     );

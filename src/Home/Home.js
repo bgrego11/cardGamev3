@@ -7,7 +7,6 @@ import Game from '../Game/Game';
 import axios from 'axios'
 
 
- const socketUrl = "http://localhost:3001"
 
 class Home extends Component {
   
@@ -18,7 +17,7 @@ class Home extends Component {
                 socket: null, 
                 user: null,
                 allPlayers: null,
-                profile: "weed"
+                profile: "none"
       };
       }
   
@@ -26,8 +25,6 @@ class Home extends Component {
       componentWillMount() {
         
         const socket = io.connect("/")
-        
-        console.log(socket);
 
         const addUserName = async () => { const res = await axios.get('https://wild-rice-5480.auth0.com/userinfo', { headers: {"Authorization" : `Bearer ${localStorage.access_token}`}})
         return await res.data;

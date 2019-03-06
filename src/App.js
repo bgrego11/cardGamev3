@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Button from 'react-bootstrap/Button';
 
 
 class App extends Component {
@@ -51,9 +52,14 @@ class App extends Component {
               <div>
               <div className="navbar" id="homeid">
               <div className="linkBox">
-              <div className="link" onClick={this.goTo.bind(this, 'home')}>Cards Against Humanity</div>
-
-                <div className="link" onClick={this.logout.bind(this)}>Log Out</div>
+                <Button id="homeBtn" variant="outline-light"  onClick={this.goTo.bind(this, 'home')}>
+                  Home
+                </Button>
+              
+                <Button id="homeBtn" variant="outline-light" onClick={this.logout.bind(this)}>
+                  Log Out
+                </Button>
+                
                 </div>
                 </div>
                 </div>

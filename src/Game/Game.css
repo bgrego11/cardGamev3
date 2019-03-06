@@ -24,7 +24,7 @@ width: 100%;
 .dealerPicks {
     position: absolute;
     right: 0;
-    top: 150px;
+    top: 70px;
     width: 40vw;
 }
 
@@ -332,4 +332,105 @@ width: 100%;
     cursor: pointer;
       animation-name: bounce;
       -moz-animation-name: bounce;
+  }
+
+  #snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+  }
+  
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+
+  @media only screen and (max-width: 600px) {
+    .game-flip-card {
+        background-color: transparent;
+        width: 95vw;
+        height: 100vh;
+        margin: 20px auto auto auto;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+    }
+
+    .playerName {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-family: 'Roboto Slab', serif;
+        color: white;
+        width: 120px;
+        overflow: hidden;
+    }
+    
+    .playerPic {
+        width: 30px;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        right: 135px;
+    }
+
+    .dealerPicks {
+        position: relative;
+        width: 100vw;
+        right: 0;
+        top: 0;
+    }
+
+    .score {
+        position: absolute;
+        top: 70px;
+        right: 150px;
+        display: none;
+    }
+
+    .whiteCardBox {
+        width: 100%;
+    }
+
+    .cardFrame {
+        padding: 0px;
+        text-align: center;
+        width: 100%;
+        height: 1100px;
+        background: white;
+        color: black;
+    }
+
+
   }

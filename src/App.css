@@ -14,25 +14,11 @@
   color: white;
 }
 
-
-.landingbtn {
-    margin-top: 20px;
-    color: white;
-    font-family: 'Raleway';
-    font-size: 30px;
-    border: 2px solid white;
-    padding: 10px;
-    border-radius: 5%;
-    background-color: transparent; 
+#homeBtn {
+  font-family: 'Arial';
+  margin: 0px 3px;
 }
 
-.landingbtn:hover {
-background-color: white; 
-transition: background-color .3s linear;
-color: black;
-cursor: pointer;
-transform:scale(1.2);
-}
 
 .hero {
   background-color: black;
@@ -43,6 +29,7 @@ transform:scale(1.2);
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
@@ -57,26 +44,13 @@ transform:scale(1.2);
 .navbar {
   width: 100%;
   background-color: #1B242F;
-  height:50px; 
+  height:55px; 
   color: white;
   border-bottom: 3px solid #bf0154;
   font-family: 'Raleway';
   font-size: 20px;
 }
 
-.link {
-  margin: 10px 30px;
-  float: left;
-  color: white;
-  text-decoration: none;
-  font-family: 'Roboto Slab', serif;
-}
-
-.link:hover {
-  transition: background-color .8s linear;
-  color: #3de71b;
-  cursor: pointer;
-}
 
 .linkBox {
   margin-left: 20px;
@@ -192,4 +166,32 @@ transform:scale(1.2);
 		-ms-transform:     translateY(-5px);
 		transform:         translateY(-5px)
 	}
+}
+
+@media only screen and (max-width: 600px) { 
+
+  .navbar {
+    height: 100px;
+    width: 100%;
+  }
+
+  .linkBox {
+    margin-left: 0px;
+  }
+
+  .link {
+    margin: 0px 0px;
+    width: 100%;
+    float: left;
+    color: white;
+    text-decoration: none;
+    font-family: 'Roboto Slab', serif;
+}
+
+#homeBtn {
+  width:80%;
+  font-family: 'Arial';
+  margin: 2px 0px;
+}
+
 }

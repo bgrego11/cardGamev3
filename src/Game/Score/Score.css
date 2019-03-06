@@ -1,0 +1,14 @@
+.scoreBtn {
+    position: absolute;
+    top: 8px;
+    left: 203px;
+}
+
+@media only screen and (max-width: 600px) { 
+    .scoreBtn {
+        position: absolute;
+        top: 52px;
+        right: 5px;
+    }
+    
+}
